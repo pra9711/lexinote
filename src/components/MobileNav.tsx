@@ -17,8 +17,7 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
   }, [pathname]);
 
   useEffect(() => {
-  
-  }, [isOpen]); 
+  }, [isOpen]); // Add isOpen here
 
   const closeOnCurrent = (href: string) => {
     if (pathname === href) {

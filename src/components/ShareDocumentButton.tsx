@@ -93,7 +93,7 @@ const ShareDocumentButton = ({ fileId, fileName }: ShareDocumentButtonProps) => 
             Share Document
           </DialogTitle>
           <DialogDescription>
-            Share "{fileName}" with others. They'll be able to view and chat with the document.
+            Share &quot;{fileName}&quot; - Let&apos;s collaborate!
           </DialogDescription>
         </DialogHeader>
         
