@@ -450,10 +450,10 @@ export default function Home() {
                 </span>
               </h1>
               <p className="text-lg sm:text-xl text-gray-700 max-w-xl mb-5">
-                Meet <span className="font-bold text-blue-700">Lexinote</span> — transform your documents into interactive conversations. Upload, analyze, and extract insights with advanced AI technology.
+                Meet <span className="font-bold text-blue-700">Lexinote</span> &mdash; transform your documents into interactive conversations. Upload, analyze, and extract insights with advanced AI technology.
               </p>
               <div className="mb-7 text-blue-700 font-semibold text-base sm:text-lg">
-                Upload • Chat • Discover • Excel <span role="img" aria-label="target">🎯</span>
+                Upload &bull; Chat &bull; Discover &bull; Excel <span role="img" aria-label="target">🎯</span>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-start items-start">
                 <Link
