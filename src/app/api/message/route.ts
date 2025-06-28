@@ -1,12 +1,12 @@
 import { SendMessageValidator } from "@/lib/validators/SendMessageValidator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from '@/db'
 import { pinecone } from '@/lib/pinecone'
 import { PineconeStore } from "@langchain/pinecone";
 import { gemini } from "@/lib/geminiai";
 
-export const POST = async (req: NextRequest) => {
+export async function POST(req: NextRequest) {
   const body = await req.json();
 
   const { getUser } = getKindeServerSession();
@@ -125,4 +125,8 @@ USER INPUT: ${message}
   });
 
   return new Response(completion, { status: 200 });
+}
+
+export async function GET() {
+  return NextResponse.json({ message: 'API working' })
 }
