@@ -399,7 +399,6 @@ export const appRouter = router({
       return { userMessage, aiResponse }
     }),
 
-  /* Temporarily comment out the Stripe procedure
   // Stripe session creation
   createStripeSession: privateProcedure.mutation(
     async ({ ctx }) => {
@@ -452,7 +451,6 @@ export const appRouter = router({
       return { url: stripeSession.url }
     }
   ),
-  */
 
   // Export user data
   exportUserData: privateProcedure
