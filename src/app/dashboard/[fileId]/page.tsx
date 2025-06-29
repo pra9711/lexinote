@@ -29,6 +29,7 @@ const DashboardFileId = async ({ params: { fileId } }: Props) => {
   });
 
   if (!file) {
+    console.error(`File with ID ${fileId} not found for user ${user.id}`);
     notFound();
   }
 
