@@ -23,9 +23,8 @@ const Navbar = async () => {
 
   return (
     <nav className="sticky h-16 inset-x-0 top-0 z-30 w-full border-b border-gray-200/30 bg-white/90 backdrop-blur-lg shadow-lg">
-
       <div className="h-1 w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-pulse" />
-      
+
       <MaxWidthWrapper>
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -109,12 +108,16 @@ const Navbar = async () => {
                 <div className="relative z-50">
                   <UserAccountNav
                     name={
-                      !user.given_name || !user.family_name
-                        ? "Your Account"
-                        : `${user.given_name} ${user.family_name}`
+                      user?.given_name && user?.family_name
+                        ? `${user.given_name} ${user.family_name}`
+                        : user?.given_name
+                        ? user.given_name
+                        : user?.email
+                        ? user.email
+                        : "Your Account"
                     }
-                    email={user.email ?? ""}
-                    imageUrl={user.picture ?? ""}
+                    email={user?.email ?? ""}
+                    imageUrl={user?.picture ?? ""}
                   />
                 </div>
               </>
