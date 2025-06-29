@@ -11,8 +11,9 @@ import {
 import { PLANS } from "@/config/stripe";
 import { cn } from "@/lib/utils";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { ArrowRight, Check, HelpCircle, Minus, Sparkles } from "lucide-react";
+import { ArrowRight, Check, HelpCircle, Minus, Sparkles, Crown, Star, Zap } from "lucide-react";
 import Link from "next/link";
+import { getUserSubscriptionPlan } from "@/lib/stripe";
 
 //interface definition 
 interface Feature {
@@ -31,6 +32,20 @@ interface PricingItem {
 const Page = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  const subscriptionPlan = await getUserSubscriptionPlan();
+  
+  // Calculate days left in subscription
+  const getDaysLeft = () => {
+    if (!subscriptionPlan.stripeCurrentPeriodEnd) return 0;
+    const today = new Date();
+    const endDate = new Date(subscriptionPlan.stripeCurrentPeriodEnd);
+    const diffTime = endDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return Math.max(0, diffDays);
+  };
+
+  const daysLeft = getDaysLeft();
+  const isProUser = subscriptionPlan.isSubscribed;
 
   // Update the pricingItems array 
   const pricingItems: PricingItem[] = [
@@ -42,7 +57,7 @@ const Page = async () => {
         {
           text: "Up to 8 pages per PDF",
           footnote:
-            "Maximum number of pages supported per PDF document for processing and analysis.",
+            "Maximum number of pages supported for PDF document for processing and analysis.",
         },
         {
           text: "4MB file size limit",
@@ -77,7 +92,7 @@ const Page = async () => {
       quota: PLANS.find((p) => p.slug === "pro")!.quota,
       features: [
         {
-          text: "Up to 25 pages per PDF",
+          text: "Up to 35 pages per PDF",
           footnote:
             "Extended page limit for comprehensive document processing and analysis.",
         },
@@ -112,7 +127,30 @@ const Page = async () => {
     <>
       {/* Animated gradient background */}
       <div className="fixed inset-0 -z-10 bg-gradient-to-br from-blue-50 via-fuchsia-50 to-indigo-100 animate-gradient-fade" />
-      <MaxWidthWrapper className="mb-8 mt-24 text-center max-w-5xl">
+      
+      {/* Pro User Congratulations Banner  */}
+      {isProUser && (
+        <div className="relative top-0 left-0 right-0 z-40 bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-white py-3 px-4 animate-slide-down">
+          <div className="max-w-7xl mx-auto flex items-center justify-center gap-3">
+            <div className="flex items-center gap-2 animate-bounce">
+              <Crown className="h-6 w-6 text-yellow-200 animate-pulse" />
+              <Star className="h-4 w-4 text-yellow-200 animate-ping" />
+            </div>
+            <div className="text-center">
+              <span className="font-bold text-lg">🎉 Congratulations! You're already a PRO member!</span>
+              <span className="ml-2 text-yellow-100">
+                {daysLeft > 0 ? `${daysLeft} days remaining` : 'Subscription ended'}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 animate-bounce" style={{ animationDelay: '0.5s' }}>
+              <Star className="h-4 w-4 text-yellow-200 animate-ping" style={{ animationDelay: '0.3s' }} />
+              <Zap className="h-6 w-6 text-yellow-200 animate-pulse" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <MaxWidthWrapper className={cn("mb-8 text-center max-w-5xl", isProUser ? "mt-8" : "mt-24")}>
         <div className="mx-auto mb-10 sm:max-w-lg">
           <h1 className="text-6xl font-bold sm:text-7xl flex items-center justify-center gap-2">
             <Sparkles className="text-fuchsia-400 h-8 w-8 animate-bounce-slow" />
@@ -131,6 +169,8 @@ const Page = async () => {
                 PLANS.find((p) => p.slug === plan.toLowerCase())?.price
                   .amount || 0;
 
+              const isCurrentProPlan = plan === "Pro" && isProUser;
+
               return (
                 <div
                   key={plan}
@@ -139,21 +179,33 @@ const Page = async () => {
                     {
                       "border-2 border-blue-600 shadow-blue-200": plan === "Pro",
                       "border border-gray-200": plan !== "Pro",
+                      "ring-4 ring-yellow-400/50 border-yellow-400 bg-gradient-to-br from-yellow-50 to-orange-50": isCurrentProPlan,
                     }
                   )}
                   style={{
                     animationDelay: `${idx * 0.12 + 0.1}s`,
                   }}
                 >
-                  {plan === "Pro" && (
+                  {plan === "Pro" && !isProUser && (
                     <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-36 rounded-full bg-gradient-to-r from-blue-600 to-fuchsia-500 px-3 py-2 text-sm font-semibold text-white shadow-lg flex items-center justify-center gap-2 animate-pop-in">
                       <Sparkles className="h-5 w-5 animate-bounce-slow" />
                       Most Popular
                     </div>
                   )}
 
+                  {isCurrentProPlan && (
+                    <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-48 rounded-full bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 px-4 py-2 text-sm font-bold text-white shadow-lg flex items-center justify-center gap-2 animate-pulse">
+                      <Crown className="h-5 w-5 text-yellow-200 animate-bounce" />
+                      Your Current Plan
+                      <Crown className="h-5 w-5 text-yellow-200 animate-bounce" style={{ animationDelay: '0.5s' }} />
+                    </div>
+                  )}
+
                   <div className="p-5">
-                    <h3 className="my-3 text-center font-display text-3xl font-bold">
+                    <h3 className={cn(
+                      "my-3 text-center font-display text-3xl font-bold",
+                      isCurrentProPlan && "text-transparent bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text"
+                    )}>
                       {plan}
                     </h3>
                     <p className="text-gray-500">{tagline}</p>
@@ -186,7 +238,10 @@ const Page = async () => {
                           {negative ? (
                             <Minus className="h-6 w-6 text-gray-300" />
                           ) : (
-                            <Check className="h-6 w-6 text-blue-500" />
+                            <Check className={cn(
+                              "h-6 w-6",
+                              isCurrentProPlan ? "text-yellow-500" : "text-blue-500"
+                            )} />
                           )}
                         </div>
                         {footnote ? (
@@ -232,6 +287,27 @@ const Page = async () => {
                         {user ? "Upgrade now" : "Sign up"}
                         <ArrowRight className="h-5 w-5 ml-1.5" />
                       </Link>
+                    ) : isCurrentProPlan ? (
+                      <div className="space-y-3">
+                        <div className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white py-3 px-4 rounded-lg font-semibold text-center relative overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-400 animate-pulse opacity-50" />
+                          <div className="relative z-10 flex items-center justify-center gap-2">
+                            <Crown className="h-5 w-5 animate-bounce" />
+                            <span>Active Subscription</span>
+                            <Star className="h-4 w-4 animate-spin" style={{ animationDuration: '3s' }} />
+                          </div>
+                        </div>
+                        <p className="text-center text-sm text-gray-600">
+                          {daysLeft > 0 ? (
+                            <span className="flex items-center justify-center gap-1">
+                              <Zap className="h-4 w-4 text-yellow-500" />
+                              {daysLeft} days remaining in your subscription
+                            </span>
+                          ) : (
+                            <span className="text-red-500">Your subscription has ended</span>
+                          )}
+                        </p>
+                      </div>
                     ) : user ? (
                       <UpgradeButton />
                     ) : (

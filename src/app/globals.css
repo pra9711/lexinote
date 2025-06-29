@@ -550,3 +550,19 @@
 .message-enter {
   animation: message-slide-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Add to your globals.css file */
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.8s ease-out;
+}

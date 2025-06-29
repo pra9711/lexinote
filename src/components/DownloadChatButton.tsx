@@ -56,7 +56,8 @@ const DownloadChatButton = ({ fileId, fileName }: DownloadChatButtonProps) => {
     
     return messagesData.pages
       .flatMap((page) => page.messages)
-      .filter((message): message is Message => Boolean(message));
+      .filter((message): message is Message => Boolean(message))
+      .reverse(); // Add this line to reverse the order
   };
 
   // Safe download function 
