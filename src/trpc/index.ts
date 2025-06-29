@@ -1,26 +1,32 @@
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { privateProcedure, publicProcedure, router } from './trpc';
-import { TRPCError } from '@trpc/server';
-import db from '@/db';
-import { z } from 'zod';
-import { INFINITE_QUERY_LIMIT } from '@/config/infinite-query';
-import { absoluteUrl } from '@/lib/utils';
-import { getUserSubscriptionPlan } from '@/lib/stripe';
-import { stripe } from '@/lib/stripe';
-import { PLANS } from '@/config/stripe';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+import {
+  privateProcedure,
+  publicProcedure,
+  router,
+} from './trpc'
+import { TRPCError } from '@trpc/server'
+import db from '@/db'
+import { z } from 'zod'
+import { INFINITE_QUERY_LIMIT } from '@/config/infinite-query'
+import { absoluteUrl } from '@/lib/utils'
+import {
+  getUserSubscriptionPlan,
+  stripe,
+} from '@/lib/stripe'
+import { PLANS } from '@/config/stripe'
 
-// Add the missing userSettingsSchema
+// User settings validation schema
 const userSettingsSchema = z.object({
   displayName: z.string().optional(),
   email: z.string().email().optional(),
-  imageUrl: z.string().url().optional(),
+  imageUrl: z.string().optional(),
   theme: z.enum(['light', 'dark', 'system']).optional(),
   accentColor: z.string().optional(),
   fontSize: z.number().min(12).max(24).optional(),
   defaultZoom: z.number().min(50).max(200).optional(),
   autoSave: z.boolean().optional(),
   defaultHighlightColor: z.string().optional(),
-  autoDelete: z.number().min(30).max(365).optional(),
+  autoDelete: z.number().min(1).max(365).optional(),
   emailNotifications: z.boolean().optional(),
   processingAlerts: z.boolean().optional(),
   weeklyDigest: z.boolean().optional(),
@@ -33,39 +39,46 @@ const userSettingsSchema = z.object({
 export const appRouter = router({
   // Authentication callback
   authCallback: publicProcedure.query(async () => {
-    const { getUser } = getKindeServerSession();
-    const user = await getUser();
+    try {
+      const { getUser } = getKindeServerSession()
+      const user = await getUser()
 
-    if (!user?.id || !user?.email) {
-      throw new TRPCError({ code: 'UNAUTHORIZED' });
-    }
+      if (!user?.id || !user?.email)
+        throw new TRPCError({ code: 'UNAUTHORIZED' })
 
-    // Check if the user exists in the database
-    const dbUser = await db.user.findFirst({
-      where: {
-        id: user.id,
-      },
-    });
-
-    if (!dbUser) {
-      // Create user in database
-      await db.user.create({
-        data: {
+      // Check if the user exists in the database
+      const dbUser = await db.user.findFirst({
+        where: {
           id: user.id,
-          email: user.email,
-          displayName: user.given_name && user.family_name 
-            ? `${user.given_name} ${user.family_name}`
-            : user.given_name || user.email,
         },
-      });
-    }
+      })
 
-    return { success: true };
+      if (!dbUser) {
+        // Create user in database
+        await db.user.create({
+          data: {
+            id: user.id,
+            email: user.email,
+            displayName: user.given_name && user.family_name 
+              ? `${user.given_name} ${user.family_name}`
+              : user.given_name || user.email,
+          },
+        })
+      }
+
+      return { success: true }
+    } catch (error) {
+      console.error('Auth callback error:', error)
+      throw new TRPCError({ 
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Authentication failed'
+      })
+    }
   }),
 
   // Get user files
   getUserFiles: privateProcedure.query(async ({ ctx }) => {
-    const { userId } = ctx;
+    const { userId } = ctx
 
     return await db.file.findMany({
       where: {
@@ -74,21 +87,21 @@ export const appRouter = router({
       orderBy: {
         createdAt: 'desc',
       },
-    });
+    })
   }),
 
   // Get user settings
   getUserSettings: privateProcedure.query(async ({ ctx }) => {
-    const { userId } = ctx;
+    const { userId } = ctx
 
     const dbUser = await db.user.findFirst({
       where: {
         id: userId,
       },
-    });
+    })
 
     if (!dbUser) {
-      throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' });
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' })
     }
 
     // Return user settings from the user table
@@ -439,7 +452,7 @@ export const appRouter = router({
         billing_address_collection: 'auto',
         line_items: [
           {
-            price: PLANS.find((plan: any) => plan.name === 'Pro')?.price.priceIds.test,
+            price: PLANS.find((plan) => plan.name === 'Pro')?.price.priceIds.test,
             quantity: 1,
           },
         ],
@@ -548,6 +561,6 @@ export const appRouter = router({
 
       return { success: true }
     }),
-});
+})
 
-export type AppRouter = typeof appRouter;
+export type AppRouter = typeof appRouter
