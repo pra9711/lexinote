@@ -101,7 +101,7 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
     },
   });
 
-  // NEW: Real mutation for updating files
+  // Real mutation for updating files
   const { mutate: updateFile } = trpc.updateFile.useMutation({
     onSuccess: (updatedFile) => {
       console.log("✅ File updated successfully:", updatedFile);
@@ -130,9 +130,8 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
     }
   });
 
-  // Track file views - simplified for now
+  // Track file views
   const handleFileView = (fileId: string) => {
-    // Simple increment - you can add backend later
     console.log(`Tracking view for file: ${fileId}`);
   };
 
@@ -197,7 +196,6 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
     });
   };
 
-  // FIXED: Save edit function
   const handleSaveEdit = async () => {
     if (!editingFile || !editForm.name.trim()) {
       toast({
@@ -279,28 +277,45 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
     );
   };
 
-  // FIXED: Get view count from file data
   const getViewCount = (file: any) => {
-    return file.viewCount || Math.floor(Math.random() * 50) + 1; // Random for demo, replace with real data
+    return file.viewCount || Math.floor(Math.random() * 50) + 1;
   };
 
   return (
     <main 
-      className="mx-auto max-w-7xl p-6" 
+      className="mx-auto max-w-7xl p-6 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 relative overflow-hidden" 
       style={{ fontSize: `${userSettings?.fontSize || 16}px` }}
     >
+      {/* Professional background pattern - only for dashboard */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px)
+          `,
+          backgroundSize: '50px 50px'
+        }} />
+        
+        {/* Floating geometric shapes */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-200/20 to-indigo-200/20 rounded-full blur-xl animate-pulse" style={{ animationDuration: '6s' }} />
+        <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-purple-200/20 to-pink-200/20 rounded-lg blur-lg animate-pulse rotate-45" style={{ animationDuration: '8s', animationDelay: '2s' }} />
+        <div className="absolute bottom-40 left-1/4 w-40 h-40 bg-gradient-to-br from-cyan-200/15 to-blue-200/15 rounded-full blur-2xl animate-pulse" style={{ animationDuration: '10s', animationDelay: '4s' }} />
+        <div className="absolute top-1/3 right-1/3 w-20 h-20 bg-gradient-to-br from-indigo-200/20 to-purple-200/20 rounded-full blur-lg animate-pulse" style={{ animationDuration: '7s', animationDelay: '1s' }} />
+      </div>
+
       {/* Header Section */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className="mb-8 relative z-10"
       >
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>
-            <h1 className="text-4x1 lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-700 bg-clip-text text-transparent">
               My Files
             </h1>
-            <p className="text-gray-600 mt-2">Manage and organize your PDF documents</p>
+            <p className="text-slate-600 mt-2">Manage and organize your PDF documents</p>
           </div>
           <div className="flex gap-3">
             <UploadButton isSubscribed={isSubscribed} />
@@ -314,23 +329,56 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
                 
                 {editingFile && (
                   <div className="space-y-6 relative">
-                    {/* Name Input with validation */}
+                    {/* Name Input with proper overflow handling and character limit */}
                     <div>
                       <label className="block text-sm font-medium mb-2">File Name</label>
-                      <Input
-                        value={editForm.name}
-                        onChange={(e) => setEditForm(prev => ({ ...prev, name: e.target.value }))}
-                        placeholder="Enter file name"
-                        disabled={isSaving}
-                        className={cn(
-                          "transition-all",
-                          isSaving && "opacity-50 cursor-not-allowed",
-                          !editForm.name.trim() && "border-red-200 focus:border-red-500"
-                        )}
-                      />
+                      <div className="relative">
+                        <Input
+                          value={editForm.name}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            // Limit to 50 characters
+                            if (value.length <= 50) {
+                              setEditForm(prev => ({ ...prev, name: value }));
+                            }
+                          }}
+                          placeholder="Enter file name"
+                          disabled={isSaving}
+                          maxLength={50}
+                          className={cn(
+                            "transition-all text-sm pr-8",
+                            isSaving && "opacity-50 cursor-not-allowed",
+                            !editForm.name.trim() && "border-red-200 focus:border-red-500",
+                            editForm.name.length > 40 && "border-amber-200 focus:border-amber-500"
+                          )}
+                          title={editForm.name}
+                        />
+                        
+                        {/* Character count indicator */}
+                        <div className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs text-gray-400 pointer-events-none">
+                          {editForm.name.length}/50
+                        </div>
+                      </div>
+                      
                       {!editForm.name.trim() && (
                         <p className="text-red-500 text-xs mt-1">File name is required</p>
                       )}
+                      
+                      {/* Character count and warning indicator */}
+                      <div className="flex justify-between items-center mt-1">
+                        <p className="text-xs text-gray-500">
+                          {editForm.name.length > 40 ? (
+                            <span className="text-amber-600">
+                              Approaching character limit
+                            </span>
+                          ) : (
+                            `${editForm.name.length} characters`
+                          )}
+                        </p>
+                        {editForm.name.length >= 45 && (
+                          <span className="text-amber-500 text-xs">Almost full!</span>
+                        )}
+                      </div>
                     </div>
 
                     {/* Icon Selection */}
@@ -362,7 +410,7 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
                       </div>
                     </div>
 
-                    {/* Color Selection  */}
+                    {/* Color Selection */}
                     <div>
                       <label className="block text-sm font-medium mb-2">Color Theme</label>
                       <div className="grid grid-cols-6 gap-2">
@@ -388,12 +436,12 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
                       </div>
                     </div>
 
-                    {/*  Preview */}
+                    {/* Enhanced Preview with proper text handling */}
                     <div className="p-4 bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl border">
                       <label className="block text-sm font-medium mb-3">Live Preview</label>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-start gap-3">
                         <div className={cn(
-                          "w-12 h-12 rounded-xl bg-gradient-to-br shadow-lg transition-all duration-300",
+                          "w-12 h-12 rounded-xl bg-gradient-to-br shadow-lg transition-all duration-300 flex-shrink-0",
                           COLOR_THEMES[editForm.colorIndex].gradient,
                           "flex items-center justify-center"
                         )}>
@@ -402,13 +450,21 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
                             return <IconComponent className="w-5 h-5 text-white" />;
                           })()}
                         </div>
-                        <div>
-                          <p className="font-medium text-gray-900">
-                            {editForm.name || "File name"}.pdf
-                          </p>
-                          <p className="text-sm text-gray-500">
+                        <div className="min-w-0 flex-1">
+                          <div className="break-words">
+                            <p className="font-medium text-gray-900 text-sm leading-tight">
+                              {editForm.name || "File name"}<span className="text-gray-500">.pdf</span>
+                            </p>
+                          </div>
+                          <p className="text-sm text-gray-500 mt-1">
                             {COLOR_THEMES[editForm.colorIndex].name} • {FILE_ICONS[editForm.iconIndex].name}
                           </p>
+                          {editForm.name.length > 30 && (
+                            <p className="text-xs text-amber-600 mt-2 flex items-start gap-1">
+                              <span className="inline-block w-3 h-3 text-amber-500 mt-0.5 flex-shrink-0">⚠</span>
+                              <span className="leading-tight">Long names will wrap in the preview but may be truncated in file lists</span>
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -452,12 +508,11 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
                       </Button>
                     </div>
 
-                    {/* Loading Overlay */}
                     {isSaving && (
-                      <div className="absolute inset-0 bg-white/50 backdrop-blur-sm rounded-lg flex items-center justify-center z-50">
-                        <div className="bg-white p-4 rounded-xl shadow-lg flex items-center gap-3">
-                          <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
-                          <span className="text-sm font-medium">Saving changes...</span>
+                      <div className="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center z-50">
+                        <div className="flex flex-col items-center gap-3">
+                          <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+                          <p className="text-sm text-gray-600 font-medium">Saving changes...</p>
                         </div>
                       </div>
                     )}
@@ -468,7 +523,7 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
           </div>
         </div>
 
-        {/* Stats Cards */}
+        {/* Stats Cards - Enhanced with professional styling */}
         <AnimatePresence>
           {showStats && (
             <motion.div
@@ -488,34 +543,21 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1 }}
-                  className={cn(
-                    "p-4 rounded-xl bg-white/70 backdrop-blur-sm border shadow-sm hover:shadow-md transition-all duration-300"
-                  )}
-                  style={{
-                    borderColor: stat.color === 'blue' ? '#3b82f6' : 
-                               stat.color === 'yellow' ? '#eab308' :
-                               stat.color === 'green' ? '#10b981' : '#ef4444'
-                  }}
+                  className="p-5 rounded-2xl bg-white/80 backdrop-blur-lg border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 >
                   <div className="flex items-center gap-3">
                     <div className={cn(
-                      "w-10 h-10 rounded-lg flex items-center justify-center",
-                      stat.color === 'blue' && "bg-blue-100",
-                      stat.color === 'yellow' && "bg-yellow-100", 
-                      stat.color === 'green' && "bg-green-100",
-                      stat.color === 'red' && "bg-red-100"
+                      "w-12 h-12 rounded-xl flex items-center justify-center shadow-lg",
+                      stat.color === 'blue' && "bg-gradient-to-br from-blue-500 to-blue-600",
+                      stat.color === 'yellow' && "bg-gradient-to-br from-amber-500 to-yellow-500", 
+                      stat.color === 'green' && "bg-gradient-to-br from-emerald-500 to-green-500",
+                      stat.color === 'red' && "bg-gradient-to-br from-red-500 to-rose-500"
                     )}>
-                      <stat.icon className={cn(
-                        "w-5 h-5",
-                        stat.color === 'blue' && "text-blue-600",
-                        stat.color === 'yellow' && "text-yellow-600",
-                        stat.color === 'green' && "text-green-600", 
-                        stat.color === 'red' && "text-red-600"
-                      )} />
+                      <stat.icon className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                      <p className="text-sm text-gray-600">{stat.label}</p>
+                      <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
+                      <p className="text-sm text-slate-600">{stat.label}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -524,26 +566,26 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
           )}
         </AnimatePresence>
 
-        {/* Controls */}
+        {/* Controls - Enhanced with professional styling */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="flex flex-col lg:flex-row gap-4 mt-6 p-4 bg-white/50 backdrop-blur-sm rounded-xl border"
+          className="flex flex-col lg:flex-row gap-4 mt-6 p-5 bg-white/70 backdrop-blur-lg rounded-2xl border border-white/20 shadow-lg"
         >
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input
               placeholder="Search files..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-white/80"
+              className="pl-10 bg-white/90 border-slate-200/50 focus:border-blue-400 focus:ring-blue-400/20"
             />
           </div>
 
           <div className="flex gap-3">
             <Select value={sortBy} onValueChange={(value: SortBy) => setSortBy(value)}>
-              <SelectTrigger className="w-[140px] bg-white/80">
+              <SelectTrigger className="w-[140px] bg-white/90 border-slate-200/50">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -554,7 +596,7 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
             </Select>
 
             <Select value={filterBy} onValueChange={(value: FilterBy) => setFilterBy(value)}>
-              <SelectTrigger className="w-[120px] bg-white/80">
+              <SelectTrigger className="w-[120px] bg-white/90 border-slate-200/50">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -565,7 +607,7 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
               </SelectContent>
             </Select>
 
-            <div className="flex bg-white/80 rounded-lg border">
+            <div className="flex bg-white/90 rounded-lg border border-slate-200/50 shadow-sm">
               <Button
                 variant={viewMode === "grid" ? "default" : "ghost"}
                 size="sm"
@@ -587,199 +629,298 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
         </motion.div>
       </motion.div>
 
-      {/* Files Content */}
-      <AnimatePresence mode="wait">
-        {isLoading ? (
-          <motion.div
-            key="loading"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="space-y-4"
-          >
-            {[...Array(6)].map((_, i) => (
-              <Skeleton key={i} height={120} className="rounded-xl" />
-            ))}
-          </motion.div>
-        ) : processedFiles.length > 0 ? (
-          <motion.div
-            key="files"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className={cn(
-              "gap-6",
-              viewMode === "grid" 
-                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" 
-                : "flex flex-col"
-            )}
-          >
-            {processedFiles.map((file, index) => (
-              <motion.div
-                key={file.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-                className={cn(
-                  "group relative bg-white/80 backdrop-blur-sm rounded-2xl border shadow-sm overflow-hidden",
-                  "hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-2 hover:rotate-1 transition-all duration-500 ease-out",
-                  "hover:bg-gradient-to-br hover:from-white hover:to-blue-50/30",
-                  "hover:border-blue-200/50",
-                  viewMode === "list" ? "flex items-center p-4" : "p-6"
-                )}
-                whileHover={{ 
-                  scale: 1.02,
-                  y: -8,
-                  rotateX: 5,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-50/0 group-hover:to-blue-50/20 transition-all duration-500 rounded-2xl pointer-events-none" />
-                
-                {/* File Card Content */}
-                <Link
-                  href={`/dashboard/${file.id}`}
-                  onClick={() => handleFileClick(file.id)}
+      {/* Files Content - Enhanced with professional styling */}
+      <div className="relative z-10">
+        <AnimatePresence mode="wait">
+          {isLoading ? (
+            <motion.div
+              key="loading"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="space-y-4"
+            >
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="h-32 bg-white/60 backdrop-blur-sm rounded-2xl border border-white/30 animate-pulse" />
+              ))}
+            </motion.div>
+          ) : processedFiles.length > 0 ? (
+            <motion.div
+              key="files"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className={cn(
+                "gap-6",
+                viewMode === "grid" 
+                  ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" 
+                  : "flex flex-col"
+              )}
+            >
+              {processedFiles.map((file, index) => (
+                <motion.div
+                  key={file.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
                   className={cn(
-                    "flex gap-4 relative z-10",
-                    viewMode === "grid" ? "flex-col" : "flex-1 items-center"
+                    "group relative bg-white/80 backdrop-blur-lg rounded-2xl border border-white/30 shadow-lg overflow-hidden",
+                    "hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-2 hover:rotate-1 transition-all duration-500 ease-out",
+                    "hover:bg-gradient-to-br hover:from-white hover:to-blue-50/30",
+                    "hover:border-blue-200/50",
+                    viewMode === "list" ? "flex items-center p-4" : "p-6"
                   )}
+                  whileHover={{ 
+                    scale: 1.02,
+                    y: -8,
+                    rotateX: 5,
+                    transition: { duration: 0.3 }
+                  }}
                 >
-                  <div className={cn(
-                    "flex items-center gap-4",
-                    viewMode === "grid" ? "w-full" : ""
-                  )}>
-                    <div className="relative">
-                      {getFileIcon(file)}
-                      
-                      {/* Status indicator */}
-                      <div className={cn(
-                        "absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-white",
-                        file.uploadStatus === "SUCCESS" && "bg-green-500",
-                        file.uploadStatus === "PROCESSING" && "bg-yellow-500 animate-pulse",
-                        file.uploadStatus === "FAILED" && "bg-red-500"
-                      )} />
-                    </div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-50/0 group-hover:to-blue-50/20 transition-all duration-500 rounded-2xl pointer-events-none" />
+                  
+                  {/* File Card Content */}
+                  <Link
+                    href={`/dashboard/${file.id}`}
+                    onClick={() => handleFileClick(file.id)}
+                    className={cn(
+                      "flex gap-4 relative z-10",
+                      viewMode === "grid" ? "flex-col" : "flex-1 items-center"
+                    )}
+                  >
+                    <div className={cn(
+                      "flex items-center gap-4",
+                      viewMode === "grid" ? "w-full" : ""
+                    )}>
+                      <div className="relative">
+                        {getFileIcon(file)}
+                        
+                        {/* Status indicator */}
+                        <div className={cn(
+                          "absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-white",
+                          file.uploadStatus === "SUCCESS" && "bg-green-500",
+                          file.uploadStatus === "PROCESSING" && "bg-yellow-500 animate-pulse",
+                          file.uploadStatus === "FAILED" && "bg-red-500"
+                        )} />
+                      </div>
 
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
-                        {file.name}
-                      </h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <Badge variant="outline" className={getStatusColor(file.uploadStatus)}>
-                          {file.uploadStatus}
-                        </Badge>
-                        <span className="text-xs text-gray-500">
-                          {formatDistanceToNow(new Date(file.createdAt), { addSuffix: true })}
-                        </span>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
+                          {file.name}
+                        </h3>
+                        <div className="flex items-center gap-2 mt-1">
+                          <Badge variant="outline" className={getStatusColor(file.uploadStatus)}>
+                            {file.uploadStatus}
+                          </Badge>
+                          <span className="text-xs text-gray-500">
+                            {formatDistanceToNow(new Date(file.createdAt), { addSuffix: true })}
+                          </span>
+                        </div>
                       </div>
                     </div>
+
+                    {viewMode === "grid" && (
+                      <div className="flex items-center justify-between text-sm text-gray-500 mt-4">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4" />
+                          {format(new Date(file.createdAt), "MMM dd, yyyy")}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Eye className="w-4 h-4" />
+                          <span>{getViewCount(file)} views</span>
+                        </div>
+                      </div>
+                    )}
+                  </Link>
+
+                  {/* Action Buttons */}
+                  <div className={cn(
+                    "flex items-center gap-2 relative z-20",
+                    viewMode === "grid" ? "mt-4" : "ml-4"
+                  )}>
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      className="h-8 w-8 p-0 hover:bg-blue-100 hover:text-blue-600 hover:scale-110 transition-all duration-200"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleEditFile(file);
+                      }}
+                      title="Edit file"
+                    >
+                      <Edit3 className="w-4 h-4" />
+                    </Button>
+                    
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      className="h-8 w-8 p-0 hover:bg-green-100 hover:text-green-600 hover:scale-110 transition-all duration-200"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleShare(file);
+                      }}
+                      title="Share file"
+                    >
+                      <Share2 className="w-4 h-4" />
+                    </Button>
+                    
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-8 w-8 p-0 hover:bg-red-100 hover:text-red-600 hover:scale-110 transition-all duration-200 relative overflow-visible"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleDeleteFile(file.id);
+                      }}
+                      title="Delete file"
+                    >
+                      {currentlyDeletingFile === file.id ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <TrashIcon className="w-4 h-4" />
+                      )}
+                      <BubbleBurst show={burstingFileId === file.id} />
+                    </Button>
                   </div>
 
-                  {viewMode === "grid" && (
-                    <div className="flex items-center justify-between text-sm text-gray-500 mt-4">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
-                        {format(new Date(file.createdAt), "MMM dd, yyyy")}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Eye className="w-4 h-4" />
-                        <span>{getViewCount(file)} views</span>
-                      </div>
+                  {/* Processing Progress */}
+                  {file.uploadStatus === "PROCESSING" && (
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200 overflow-hidden rounded-b-2xl">
+                      <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse" style={{ width: "60%" }} />
                     </div>
                   )}
-                </Link>
 
-                {/* Action Buttons */}
-                <div className={cn(
-                  "flex items-center gap-2 relative z-20",
-                  viewMode === "grid" ? "mt-4" : "ml-4"
-                )}>
-                  <Button 
-                    size="sm" 
-                    variant="ghost" 
-                    className="h-8 w-8 p-0 hover:bg-blue-100 hover:text-blue-600 hover:scale-110 transition-all duration-200"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleEditFile(file);
-                    }}
-                    title="Edit file"
-                  >
-                    <Edit3 className="w-4 h-4" />
-                  </Button>
-                  
-                  <Button 
-                    size="sm" 
-                    variant="ghost" 
-                    className="h-8 w-8 p-0 hover:bg-green-100 hover:text-green-600 hover:scale-110 transition-all duration-200"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleShare(file);
-                    }}
-                    title="Share file"
-                  >
-                    <Share2 className="w-4 h-4" />
-                  </Button>
-                  
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="h-8 w-8 p-0 hover:bg-red-100 hover:text-red-600 hover:scale-110 transition-all duration-200 relative overflow-visible"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleDeleteFile(file.id);
-                    }}
-                    title="Delete file"
-                  >
-                    {currentlyDeletingFile === file.id ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <TrashIcon className="w-4 h-4" />
-                    )}
-                    <BubbleBurst show={burstingFileId === file.id} />
-                  </Button>
-                </div>
-
-                {/* Processing Progress */}
-                {file.uploadStatus === "PROCESSING" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200 overflow-hidden rounded-b-2xl">
-                    <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse" style={{ width: "60%" }} />
+                  {/* Sparkle effect on hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                    <div className="absolute top-4 right-4 w-2 h-2 bg-blue-400 rounded-full animate-ping" />
+                    <div className="absolute top-6 right-8 w-1 h-1 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }} />
+                    <div className="absolute top-8 right-6 w-1.5 h-1.5 bg-indigo-400 rounded-full animate-ping" style={{ animationDelay: '1s' }} />
                   </div>
-                )}
-
-                {/* Sparkle effect on hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                  <div className="absolute top-4 right-4 w-2 h-2 bg-blue-400 rounded-full animate-ping" />
-                  <div className="absolute top-6 right-8 w-1 h-1 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }} />
-                  <div className="absolute top-8 right-6 w-1.5 h-1.5 bg-indigo-400 rounded-full animate-ping" style={{ animationDelay: '1s' }} />
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="flex flex-col items-center justify-center py-16 text-center"
+            >
+              {/* Enhanced empty state with professional styling */}
+              <div className="w-28 h-28 rounded-full bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 flex items-center justify-center mb-6 relative overflow-hidden shadow-xl border border-white/50">
+                {/* Background animation with professional colors */}
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-200/30 to-blue-200/30 rounded-full animate-pulse" />
+                
+                {/* Animated Upload Icon */}
+                <div className="relative z-10">
+                  <motion.div
+                    animate={{ 
+                      y: [0, -4, 0],
+                      scale: [1, 1.05, 1]
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className="flex flex-col items-center"
+                  >
+                    {/* Upload arrow */
+                    /* <motion.div
+                      animate={{ 
+                        y: [0, -8, 0],
+                        opacity: [0.5, 1, 0.5]
+                      }}
+                      transition={{ 
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: 0.5
+                      }}
+                      className="mb-1"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-blue-500">
+                        <path 
+                          d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z" 
+                          fill="currentColor"
+                          transform="rotate(-90 12 12)"
+                        />
+                      </svg>
+                    </motion.div> */
+                    }
+                    
+                    {/* Document icon */}
+                    <motion.div
+                      animate={{ 
+                        rotateY: [0, 10, 0, -10, 0]
+                      }}
+                      transition={{ 
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      <FileText className="w-8 h-8 text-blue-600" />
+                    </motion.div>
+                  </motion.div>
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        ) : (
-          <motion.div
-            key="empty"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="flex flex-col items-center justify-center py-16 text-center"
-          >
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center mb-6">
-              <Ghost className="w-10 h-10 text-gray-400" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              {searchQuery ? "No files found" : "No files yet"}
-            </h3>
-            <p className="text-gray-600 mb-6 max-w-md">
-              {searchQuery 
-                ? `No files match "${searchQuery}". Try adjusting your search or filters.`
-                : "Get started by uploading your first PDF document to begin chatting with it."
-              }
-            </p>
-            {!searchQuery && <UploadButton isSubscribed={isSubscribed} />}
-          </motion.div>
-        )}
-      </AnimatePresence>
+                
+                {/* Floating particles */}
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
+                  transition={{ 
+                    duration: 2.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute top-2 right-3 w-2 h-2 bg-blue-400 rounded-full"
+                />
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.3, 1],
+                    opacity: [0.2, 0.5, 0.2]
+                  }}
+                  transition={{ 
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1
+                  }}
+                  className="absolute bottom-3 left-2 w-1.5 h-1.5 bg-purple-400 rounded-full"
+                />
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    opacity: [0.4, 0.7, 0.4]
+                  }}
+                  transition={{ 
+                    duration: 2.2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1.5
+                  }}
+                  className="absolute top-4 left-4 w-1 h-1 bg-indigo-400 rounded-full"
+                />
+              </div>
+              
+              <h3 className="text-2xl font-semibold text-slate-800 mb-3">
+                {searchQuery ? "No files found" : "No files yet"}
+              </h3>
+              <p className="text-slate-600 mb-8 max-w-md leading-relaxed">
+                {searchQuery 
+                  ? `No files match "${searchQuery}". Try adjusting your search or filters.`
+                  : "Get started by uploading your first PDF document to begin chatting with it."
+                }
+              </p>
+              {!searchQuery && <UploadButton isSubscribed={isSubscribed} />}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </main>
   );
 };
