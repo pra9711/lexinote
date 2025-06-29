@@ -5,35 +5,19 @@ import { Button } from "./ui/button";
 import { trpc } from "@/app/_trpc/client";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { useToast } from "./ui/use-toast"; // Import useToast
 
 const UpgradeButton = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const { toast } = useToast(); // Initialize toast
 
-  // Temporarily comment out the mutation to fix the build error
-  /*
   const { mutate: createStripeSession } = trpc.createStripeSession.useMutation({
     onSuccess: ({ url }) => {
       window.location.href = url ?? "/dashboard/billing";
     },
   });
-  */
-
-  const handleUpgrade = () => {
-    // createStripeSession() // Also comment out the call
-
-    // Placeholder logic to prevent errors and inform the user
-    toast({
-      title: 'Feature temporarily disabled',
-      description: 'Stripe integration is being updated. Please check back later.',
-      variant: 'default',
-    })
-  }
 
   return (
     <Button
-      onClick={handleUpgrade} // Use the new handler function
+      onClick={() => createStripeSession()}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
