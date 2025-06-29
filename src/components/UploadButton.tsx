@@ -42,11 +42,22 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
   };
 
   const { mutate: startPolling } = trpc.getFile.useMutation({
+    
     onSuccess: (file) => {
       setUploadComplete(true);
       setTimeout(() => {
         router.push(`/dashboard/${file.id}`);
       }, 1500);
+    },
+    onError: (error) => {
+      console.error("Polling error:", error);
+      toast({
+        title: "Upload failed",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+      setIsUploading(false);
+      setUploadComplete(false);
     },
     retry: true,
     retryDelay: 500,
