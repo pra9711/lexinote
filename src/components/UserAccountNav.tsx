@@ -216,6 +216,25 @@ const UserAccountNav = ({
             </Link>
           </DropdownMenuItem>
 
+          {/* Billing - NEW ADDITION */}
+          <DropdownMenuItem asChild>
+            <Link 
+              href="/dashboard/billing"
+              className={cn(
+                "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200",
+                "hover:bg-green-50 hover:scale-[1.02] active:scale-95 cursor-pointer group"
+              )}
+            >
+              <div className="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                <CreditCard className="w-4 h-4 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <p className="font-medium text-gray-900">Billing</p>
+                <p className="text-xs text-gray-500">Subscription & payments</p>
+              </div>
+            </Link>
+          </DropdownMenuItem>
+
           {/* Upgrade */}
           <DropdownMenuItem asChild>
             <Link 
@@ -231,7 +250,7 @@ const UserAccountNav = ({
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <p className="font-medium text-gray-900">Upgrade</p>
-                  <span className="px-2 py-0.5 bg-gradient-to-r from-pink-500 to-orange-500 text-red text-xs font-bold rounded-full">
+                  <span className="px-2 py-0.5 bg-gradient-to-r from-pink-500 to-orange-500 text-white text-xs font-bold rounded-full">
                     NEW
                   </span>
                 </div>
