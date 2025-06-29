@@ -375,36 +375,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white overflow-hidden">
-      {/* Navigation */}
-      <nav className="w-full border-b border-gray-200 bg-white shadow">
-        <div className="flex h-16 items-center justify-between px-4 max-w-7xl mx-auto">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center font-bold text-2xl text-blue-700"
-          >
-            <Sparkles className="mr-2 h-6 w-6 text-purple-500" />
-            Lexinote
-          </Link>
-
-          {/* Navigation Links */}
-          <div className="flex items-center space-x-4">
-            <Link
-              href="/pricing"
-              className="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
-            >
-              Pricing
-            </Link>
-            <Link
-              href="/dashboard"
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full text-sm font-medium hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
-            >
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </nav>
-
       
       <Hero3DBackground>
         <MaxWidthWrapper>
