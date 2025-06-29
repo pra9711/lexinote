@@ -12,7 +12,8 @@ export function absoluteUrl(path: string) {
     return `${process.env.NEXT_PUBLIC_SITE_URL}${path}`
   if (process.env.VERCEL_URL)
     return `https://${process.env.VERCEL_URL}${path}`
-  return `https://lexinote.vercel.app${path}`
+  return `https://lexinote.vercel.app'${path}`
+    
 }
 
 export function constructMetadata({
