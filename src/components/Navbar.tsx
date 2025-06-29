@@ -19,6 +19,8 @@ const Navbar = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
+  console.log("Navbar user:", user);
+
   return (
     <nav className="sticky h-16 inset-x-0 top-0 z-30 w-full border-b border-gray-200/30 bg-white/90 backdrop-blur-lg shadow-lg">
 
