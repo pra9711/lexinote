@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
@@ -86,7 +86,7 @@ function DashboardSimulation() {
   ]);
   const [isTyping, setIsTyping] = useState<boolean>(false);
 
-  const simulationSteps = useMemo(() => [
+  const simulationSteps: SimulationStep[] = [
     {
       userMessage: "What are the main findings of this study?",
       botResponse: "Based on the document analysis, the study presents three key findings: 1) The experimental group showed 34% improvement in performance metrics, 2) Cost reduction of 28% was achieved through optimization, and 3) User satisfaction increased by 45% compared to baseline measurements."
@@ -95,7 +95,7 @@ function DashboardSimulation() {
       userMessage: "Can you summarize the methodology section?",
       botResponse: "The methodology employed a mixed-methods approach combining quantitative analysis of 1,200 participants over 6 months with qualitative interviews from 50 key stakeholders. The study used randomized controlled trials with statistical significance testing at p<0.05 level."
     }
-  ], []);
+  ];
 
   useEffect(() => {
     if (currentStep < simulationSteps.length) {
