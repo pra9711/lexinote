@@ -4,6 +4,7 @@ import { ArrowRight, Menu, X, User, Settings, LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 interface MobileNavProps {
   isAuth: boolean;
@@ -23,6 +24,7 @@ const MobileNav = ({ isAuth, userInfo }: MobileNavProps) => {
 
   useEffect(() => {
     if (isOpen) toggleOpen();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   // Prevent body scroll when menu is open
@@ -72,10 +74,12 @@ const MobileNav = ({ isAuth, userInfo }: MobileNavProps) => {
                 <div className="flex items-center space-x-3">
                   <div className="flex-shrink-0">
                     {userInfo.imageUrl ? (
-                      <img
+                      <Image
                         className="h-10 w-10 rounded-full object-cover border-2 border-white shadow-sm"
                         src={userInfo.imageUrl}
                         alt={userInfo.name}
+                        width={40}
+                        height={40}
                       />
                     ) : (
                       <div className="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
@@ -86,7 +86,8 @@ function DashboardSimulation() {
   ]);
   const [isTyping, setIsTyping] = useState<boolean>(false);
 
-  const simulationSteps: SimulationStep[] = [
+  // Move simulationSteps to useMemo to prevent re-creation on every render
+  const simulationSteps: SimulationStep[] = useMemo(() => [
     {
       userMessage: "What are the main findings of this study?",
       botResponse: "Based on the document analysis, the study presents three key findings: 1) The experimental group showed 34% improvement in performance metrics, 2) Cost reduction of 28% was achieved through optimization, and 3) User satisfaction increased by 45% compared to baseline measurements."
@@ -95,7 +96,7 @@ function DashboardSimulation() {
       userMessage: "Can you summarize the methodology section?",
       botResponse: "The methodology employed a mixed-methods approach combining quantitative analysis of 1,200 participants over 6 months with qualitative interviews from 50 key stakeholders. The study used randomized controlled trials with statistical significance testing at p<0.05 level."
     }
-  ];
+  ], []);
 
   useEffect(() => {
     if (currentStep < simulationSteps.length) {
@@ -121,7 +122,7 @@ function DashboardSimulation() {
       }, 4000);
       return () => clearTimeout(resetTimeout);
     }
-  }, [currentStep, simulationSteps]);
+  }, [currentStep, simulationSteps]); // Now simulationSteps is stable
 
   return (
     <div className="w-full max-w-6xl mx-auto bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl shadow-2xl overflow-hidden animate-fade-in border border-slate-700">
@@ -302,6 +303,21 @@ interface HowItWorksStep {
 
 // ---- Main Landing Page ----
 export default function Home() {
+  // Move simulationSteps inside useMemo to prevent re-creation on every render
+  const simulationSteps = useMemo(() => [
+    { x: 0, y: 0, rotation: 0 },
+    { x: 100, y: 50, rotation: 15 },
+    { x: 200, y: 80, rotation: -10 },
+    { x: 300, y: 120, rotation: 25 },
+    { x: 400, y: 90, rotation: -5 },
+    { x: 500, y: 140, rotation: 20 },
+    { x: 600, y: 110, rotation: -15 },
+    { x: 700, y: 160, rotation: 30 },
+    { x: 800, y: 130, rotation: -8 },
+    { x: 900, y: 180, rotation: 12 },
+    { x: 1000, y: 150, rotation: -20 },
+  ], []);
+
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
