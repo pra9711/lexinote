@@ -314,71 +314,26 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
                 
                 {editingFile && (
                   <div className="space-y-6 relative">
-                    {/* Name Input with proper overflow handling */}
+                    {/* Name Input with validation */}
                     <div>
                       <label className="block text-sm font-medium mb-2">File Name</label>
-                      <div className="relative">
-                        <Input
-                          value={editForm.name}
-                          onChange={(e) => setEditForm(prev => ({ ...prev, name: e.target.value }))
-                          }
-                          placeholder="Enter file name"
-                          disabled={isSaving}
-                          className={cn(
-                            "transition-all text-sm pr-3",
-                            isSaving && "opacity-50 cursor-not-allowed",
-                            !editForm.name.trim() && "border-red-200 focus:border-red-500"
-                          )}
-                          style={{
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                            maxWidth: '100%'
-                          }}
-                          title={editForm.name} // Show full text on hover
-                          onFocus={(e) => {
-                            // Remove text truncation when focused for editing
-                            e.target.style.whiteSpace = 'normal';
-                            e.target.style.textOverflow = 'clip';
-                            e.target.style.overflow = 'visible';
-                          }}
-                          onBlur={(e) => {
-                            // Restore text truncation when not focused
-                            e.target.style.whiteSpace = 'nowrap';
-                            e.target.style.textOverflow = 'ellipsis';
-                            e.target.style.overflow = 'hidden';
-                          }}
-                        />
-                        {/* Visual indicator for long text */}
-                        {editForm.name.length > 40 && (
-                          <div className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs text-gray-400 pointer-events-none">
-                            ...
-                          </div>
+                      <Input
+                        value={editForm.name}
+                        onChange={(e) => setEditForm(prev => ({ ...prev, name: e.target.value }))}
+                        placeholder="Enter file name"
+                        disabled={isSaving}
+                        className={cn(
+                          "transition-all",
+                          isSaving && "opacity-50 cursor-not-allowed",
+                          !editForm.name.trim() && "border-red-200 focus:border-red-500"
                         )}
-                      </div>
-                      
+                      />
                       {!editForm.name.trim() && (
                         <p className="text-red-500 text-xs mt-1">File name is required</p>
                       )}
-                      
-                      {/* Character count indicator */}
-                      <div className="flex justify-between items-center mt-1">
-                        <p className="text-xs text-gray-500">
-                          {editForm.name.length > 50 ? (
-                            <span className="text-amber-600">
-                              Long filename - will be truncated in display
-                            </span>
-                          ) : (
-                            `${editForm.name.length} characters`
-                          )}
-                        </p>
-                        {editForm.name.length > 100 && (
-                          <span className="text-red-500 text-xs">Too long!</span>
-                        )}
-                      </div>
                     </div>
 
-                    {/* Icon Selection - unchanged */}
+                    {/* Icon Selection */}
                     <div>
                       <label className="block text-sm font-medium mb-2">Icon</label>
                       <div className="grid grid-cols-5 gap-2">
@@ -407,7 +362,7 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
                       </div>
                     </div>
 
-                    {/* Color Selection - unchanged */}
+                    {/* Color Selection  */}
                     <div>
                       <label className="block text-sm font-medium mb-2">Color Theme</label>
                       <div className="grid grid-cols-6 gap-2">
@@ -433,12 +388,12 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
                       </div>
                     </div>
 
-                    {/* Enhanced Preview with proper text truncation */}
+                    {/*  Preview */}
                     <div className="p-4 bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl border">
                       <label className="block text-sm font-medium mb-3">Live Preview</label>
                       <div className="flex items-center gap-3">
                         <div className={cn(
-                          "w-12 h-12 rounded-xl bg-gradient-to-br shadow-lg transition-all duration-300 flex-shrink-0",
+                          "w-12 h-12 rounded-xl bg-gradient-to-br shadow-lg transition-all duration-300",
                           COLOR_THEMES[editForm.colorIndex].gradient,
                           "flex items-center justify-center"
                         )}>
@@ -447,28 +402,13 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
                             return <IconComponent className="w-5 h-5 text-white" />;
                           })()}
                         </div>
-                        <div className="min-w-0 flex-1 overflow-hidden">
-                          <p 
-                            className="font-medium text-gray-900 truncate max-w-full" 
-                            title={`${editForm.name || "File name"}.pdf`}
-                            style={{
-                              overflow: 'hidden',
-                              textOverflow: 'ellipsis',
-                              whiteSpace: 'nowrap',
-                              maxWidth: '100%'
-                            }}
-                          >
-                            {editForm.name || "File name"}<span className="text-gray-500">.pdf</span>
+                        <div>
+                          <p className="font-medium text-gray-900">
+                            {editForm.name || "File name"}.pdf
                           </p>
-                          <p className="text-sm text-gray-500 truncate">
+                          <p className="text-sm text-gray-500">
                             {COLOR_THEMES[editForm.colorIndex].name} • {FILE_ICONS[editForm.iconIndex].name}
                           </p>
-                          {editForm.name.length > 30 && (
-                            <p className="text-xs text-amber-600 mt-1 flex items-center gap-1">
-                              <span className="inline-block w-3 h-3 text-amber-500">⚠</span>
-                              Name will be truncated in file list
-                            </p>
-                          )}
                         </div>
                       </div>
                     </div>
@@ -483,7 +423,7 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
                             ? "bg-blue-400 cursor-not-allowed" 
                             : "bg-blue-600 hover:bg-blue-700 hover:scale-105"
                         )}
-                        disabled={isSaving || !editForm.name.trim() || editForm.name.length > 100}
+                        disabled={isSaving || !editForm.name.trim()}
                       >
                         {isSaving ? (
                           <>
@@ -512,7 +452,7 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
                       </Button>
                     </div>
 
-                    {/* Loading Overlay - unchanged */}
+                    {/* Loading Overlay */}
                     {isSaving && (
                       <div className="absolute inset-0 bg-white/50 backdrop-blur-sm rounded-lg flex items-center justify-center z-50">
                         <div className="bg-white p-4 rounded-xl shadow-lg flex items-center gap-3">
@@ -824,105 +764,9 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
             exit={{ opacity: 0, scale: 0.9 }}
             className="flex flex-col items-center justify-center py-16 text-center"
           >
-            {/* Animated Upload Icon */}
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center mb-6 relative overflow-hidden">
-              {/* Background animation */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-200/50 to-purple-200/50 rounded-full animate-pulse" />
-              
-              {/* Main document icon with upload arrow */}
-              <div className="relative z-10">
-                <motion.div
-                  animate={{ 
-                    y: [0, -4, 0],
-                    scale: [1, 1.05, 1]
-                  }}
-                  transition={{ 
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="flex flex-col items-center"
-                >
-                  {/* Upload arrow */}
-                  <motion.div
-                    animate={{ 
-                      y: [0, -8, 0],
-                      opacity: [0.5, 1, 0.5]
-                    }}
-                    transition={{ 
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 0.5
-                    }}
-                    className="mb-1"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-blue-500">
-                      <path 
-                        d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z" 
-                        fill="currentColor"
-                        transform="rotate(-90 12 12)"
-                      />
-                    </svg>
-                  </motion.div>
-                  
-                  {/* Document icon */}
-                  <motion.div
-                    animate={{ 
-                      rotateY: [0, 10, 0, -10, 0]
-                    }}
-                    transition={{ 
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    <FileText className="w-8 h-8 text-blue-600" />
-                  </motion.div>
-                </motion.div>
-              </div>
-              
-              {/* Floating particles */}
-              <motion.div
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3]
-                }}
-                transition={{ 
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="absolute top-2 right-3 w-2 h-2 bg-blue-400 rounded-full"
-              />
-              <motion.div
-                animate={{ 
-                  scale: [1, 1.3, 1],
-                  opacity: [0.2, 0.5, 0.2]
-                }}
-                transition={{ 
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1
-                }}
-                className="absolute bottom-3 left-2 w-1.5 h-1.5 bg-purple-400 rounded-full"
-              />
-              <motion.div
-                animate={{ 
-                  scale: [1, 1.1, 1],
-                  opacity: [0.4, 0.7, 0.4]
-                }}
-                transition={{ 
-                  duration: 2.2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1.5
-                }}
-                className="absolute top-4 left-4 w-1 h-1 bg-indigo-400 rounded-full"
-              />
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center mb-6">
+              <Ghost className="w-10 h-10 text-gray-400" />
             </div>
-            
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
               {searchQuery ? "No files found" : "No files yet"}
             </h3>
