@@ -1,20 +1,18 @@
 import { PrismaClient } from '@prisma/client'
 
-// Add logging for easier debugging (optional)
-const prismaClientSingleton = () => {
-  return new PrismaClient({
-    log: ['query', 'info', 'warn', 'error'],
-  })
-}
-
 declare global {
-  // Use type PrismaClient directly for clarity
+  // allow global `var` declarations
   // eslint-disable-next-line no-var
   var prisma: PrismaClient | undefined
 }
 
-const prisma = globalThis.prisma ?? prismaClientSingleton()
+const prisma =
+  global.prisma ||
+  new PrismaClient({
+    log:
+      process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+  })
 
-if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma
+if (process.env.NODE_ENV !== 'production') global.prisma = prisma
 
 export default prisma
