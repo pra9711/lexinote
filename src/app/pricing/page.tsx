@@ -137,13 +137,13 @@ const Page = async () => {
               <Star className="h-4 w-4 text-yellow-200 animate-ping" />
             </div>
             <div className="text-center">
-              <span className="font-bold text-lg">🎉 Congratulations! You're already a PRO member!</span>
+              <span className="font-bold text-lg">🎉 Congratulations! You are already a PRO member!</span>
               <span className="ml-2 text-yellow-100">
-                {daysLeft > 0 ? `${daysLeft} days remaining` : 'Subscription ended'}
+                {daysLeft > 0 ? `${daysLeft} days remaining` : "Subscription ended"}
               </span>
             </div>
-            <div className="flex items-center gap-2 animate-bounce" style={{ animationDelay: '0.5s' }}>
-              <Star className="h-4 w-4 text-yellow-200 animate-ping" style={{ animationDelay: '0.3s' }} />
+            <div className="flex items-center gap-2 animate-bounce" style={{ animationDelay: "0.5s" }}>
+              <Star className="h-4 w-4 text-yellow-200 animate-ping" style={{ animationDelay: "0.3s" }} />
               <Zap className="h-6 w-6 text-yellow-200 animate-pulse" />
             </div>
           </div>
@@ -294,7 +294,7 @@ const Page = async () => {
                           <div className="relative z-10 flex items-center justify-center gap-2">
                             <Crown className="h-5 w-5 animate-bounce" />
                             <span>Active Subscription</span>
-                            <Star className="h-4 w-4 animate-spin" style={{ animationDuration: '3s' }} />
+                            <Star className="h-4 w-4 animate-spin" style={{ animationDuration: "3s" }} />
                           </div>
                         </div>
                         <p className="text-center text-sm text-gray-600">
