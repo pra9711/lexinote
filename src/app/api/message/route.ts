@@ -11,6 +11,7 @@ export const POST = async (req: NextRequest) => {
 
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  console.log("Message route user:", user);
 
   const userId = user?.id;
 
