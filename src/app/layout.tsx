@@ -10,7 +10,6 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = constructMetadata();
-export const dynamic = 'force-dynamic';
 
 export default function RootLayout({
   children,
@@ -20,8 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn('min-h-screen font-sans antialiased grainy', inter.className)}>
+        {/* Render Server Component outside of client-only Providers */}
+        <Navbar />
         <Providers>
-          <Navbar />
           {children}
         </Providers>
       </body>
