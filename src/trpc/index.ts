@@ -418,6 +418,7 @@ export const appRouter = router({
       const { userId } = ctx
 
       const billingUrl = absoluteUrl('/dashboard/billing')
+      const successUrl = absoluteUrl('/dashboard?upgrade=success')
 
       if (!userId) {
         throw new TRPCError({ code: 'UNAUTHORIZED' })
@@ -438,14 +439,14 @@ export const appRouter = router({
       if (subscriptionPlan.isSubscribed && dbUser.stripeCustomerId) {
         const stripeSession = await stripe.billingPortal.sessions.create({
           customer: dbUser.stripeCustomerId,
-          return_url: billingUrl,
+          return_url: successUrl,
         })
 
         return { url: stripeSession.url }
       }
 
       const stripeSession = await stripe.checkout.sessions.create({
-        success_url: billingUrl,
+        success_url: successUrl,
         cancel_url: billingUrl,
         payment_method_types: ['card'],
         mode: 'subscription',
