@@ -16,7 +16,7 @@ const Navbar = async () => {
   return (
     <nav className="sticky h-16 inset-x-0 top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur-lg shadow-sm transition-all">
       <div className="h-1 w-full bg-gradient-to-r from-blue-500 via-fuchsia-400 to-indigo-500 animate-gradient-x" />
-      <div className="flex h-15 items-center justify-between px-4 max-w-7xl mx-auto">
+      <div className="flex h-[60px] items-center justify-between px-4 max-w-7xl mx-auto">
         {/* Logo */}
         <Link
           href="/"

@@ -19,9 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn('min-h-screen font-sans antialiased grainy', inter.className)}>
-        {/* Render Server Component outside of client-only Providers */}
-        <Navbar />
         <Providers>
+          {/* Keep Server Component as a child; Next.js supports passing Server Components through Client wrappers */}
+          <Navbar />
           {children}
         </Providers>
       </body>
