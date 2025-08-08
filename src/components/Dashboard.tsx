@@ -297,7 +297,7 @@ const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
       >
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>
-            <h1 className="text-4x1 lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl lg:text-5xl leading-snug font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mt-1 pb-2">
               My Files
             </h1>
             <p className="text-gray-600 mt-2">Manage and organize your PDF documents</p>

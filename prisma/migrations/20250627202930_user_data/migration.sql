@@ -5,18 +5,18 @@ CREATE TYPE "UploadStatus" AS ENUM ('PENDING', 'PROCESSING', 'FAILED', 'SUCCESS'
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" STRING NOT NULL,
-    "email" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "displayName" STRING,
-    "imageUrl" STRING,
-    "theme" STRING DEFAULT 'system',
-    "accentColor" STRING DEFAULT 'blue',
+    "displayName" TEXT,
+    "imageUrl" TEXT,
+    "theme" TEXT DEFAULT 'system',
+    "accentColor" TEXT DEFAULT 'blue',
     "fontSize" INT4 DEFAULT 16,
     "defaultZoom" INT4 DEFAULT 100,
     "autoSave" BOOL DEFAULT true,
-    "defaultHighlightColor" STRING DEFAULT '#ffeb3b',
+    "defaultHighlightColor" TEXT DEFAULT '#ffeb3b',
     "autoDelete" INT4 DEFAULT 90,
     "emailNotifications" BOOL DEFAULT true,
     "processingAlerts" BOOL DEFAULT true,
@@ -25,9 +25,9 @@ CREATE TABLE "User" (
     "analyticsOptOut" BOOL DEFAULT false,
     "shareUsageData" BOOL DEFAULT true,
     "publicProfile" BOOL DEFAULT false,
-    "stripe_customer_id" STRING,
-    "stripe_subscription_id" STRING,
-    "stripe_price_id" STRING,
+    "stripe_customer_id" TEXT,
+    "stripe_subscription_id" TEXT,
+    "stripe_price_id" TEXT,
     "stripe_current_period_end" TIMESTAMP(3),
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -35,30 +35,30 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "File" (
-    "id" STRING NOT NULL,
-    "name" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "uploadStatus" "UploadStatus" NOT NULL DEFAULT 'PENDING',
-    "url" STRING NOT NULL,
-    "key" STRING NOT NULL,
+    "url" TEXT NOT NULL,
+    "key" TEXT NOT NULL,
     "iconIndex" INT4 NOT NULL DEFAULT 0,
     "colorIndex" INT4 NOT NULL DEFAULT 0,
     "viewCount" INT4 NOT NULL DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" STRING,
+    "userId" TEXT,
 
     CONSTRAINT "File_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Message" (
-    "id" STRING NOT NULL,
-    "text" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "text" TEXT NOT NULL,
     "isUserMessage" BOOL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" STRING,
-    "fileId" STRING,
+    "userId" TEXT,
+    "fileId" TEXT,
 
     CONSTRAINT "Message_pkey" PRIMARY KEY ("id")
 );

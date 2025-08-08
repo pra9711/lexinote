@@ -33,7 +33,8 @@ const nextConfig = {
       'gravatar.com',
       'www.gravatar.com',
       'uploadthing.com',
-      'utfs.io'
+      'utfs.io',
+      'lh3.googleusercontent.com'
     ],
     remotePatterns: [
       {
@@ -63,6 +64,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'utfs.io',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
         port: '',
         pathname: '/**',
       }

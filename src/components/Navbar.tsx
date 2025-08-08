@@ -77,7 +77,8 @@ const Navbar = async () => {
               <RegisterLink
                 className={buttonVariants({
                   size: "sm",
-                  className: "bg-gradient-to-r from-blue-600 to-fuchsia-500 hover:from-blue-700 hover:to-fuchsia-600 text-white font-semibold rounded-lg px-4 py-2 transition-all duration-200 transform hover:scale-105",
+                  className:
+                    "bg-gradient-to-r from-blue-600 to-fuchsia-500 hover:from-blue-700 hover:to-fuchsia-600 text-white font-semibold rounded-lg px-4 py-2 transition-all duration-200 transform hover:scale-105 mt-1.5",
                 })}
               >
                 Get started <ArrowRight className="ml-1.5 h-4 w-4" />
@@ -105,15 +106,17 @@ const Navbar = async () => {
               >
                 Pricing
               </Link>
-              <UserAccountNav
-                name={
-                  !user.given_name || !user.family_name
-                    ? "Your Account"
-                    : `${user.given_name} ${user.family_name}`
-                }
-                email={user.email ?? ""}
-                imageUrl={user.picture ?? ""}
-              />
+              <div className="mt-1.5">
+                <UserAccountNav
+                  name={
+                    !user.given_name || !user.family_name
+                      ? "Your Account"
+                      : `${user.given_name} ${user.family_name}`
+                  }
+                  email={user.email ?? ""}
+                  imageUrl={user.picture ?? ""}
+                />
+              </div>
             </>
           )}
         </div>

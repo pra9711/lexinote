@@ -106,7 +106,7 @@ const MobileNav = ({ isAuth, userInfo }: MobileNavProps) => {
                   <li>
                     <Link
                       onClick={() => closeOnCurrent("/sign-up")}
-                      className="flex items-center w-full font-semibold text-green-600 py-3 px-2 rounded-lg hover:bg-green-50 transition-colors"
+                      className="flex items-center w-full font-semibold text-green-600 py-3 px-2 rounded-lg hover:bg-green-50 transition-colors mt-2"
                       href="/sign-up"
                     >
                       Get started
