@@ -10,6 +10,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = constructMetadata();
+export const dynamic = 'force-dynamic';
 
 export default function RootLayout({
   children,
