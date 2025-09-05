@@ -94,9 +94,10 @@ _Experience the magic of AI-powered document analysis_
 
 <div align="center">
 
-![Lexinote Homepage](https://github.com/user-attachments/assets/homepage-screenshot.png
+<img width="1268" height="700" alt="Screenshot 2025-09-05 164234" src="https://github.com/user-attachments/assets/5b74a573-1337-4093-8947-fc35d11ec4c3" />
 
-_Transform your PDFs into intelligent conversations with our beautiful, modern interface_
+
+_Transform your PDFs into intelligent conversations with our beautiful, modern interface
 
 </div>
 
@@ -123,7 +124,8 @@ _Manage and organize your PDF documents with intuitive file tracking and status 
 
 <div align="center">
 
-![Lexinote PDF Viewer](https://github.com/user-attachments/assets/pdf-viewer-screenshot.png)
+<img width="1267" height="696" alt="Screenshot 2025-09-05 165148" src="https://github.com/user-attachments/assets/b5aa3a98-5419-4014-ab71-6605976c20fb" />
+
 
 *Advanced PDF viewing with AI-powered chat interface and intelligent document analysis*
 
@@ -131,7 +133,8 @@ _Manage and organize your PDF documents with intuitive file tracking and status 
 
 <div align="center">
 
-![Lexinote PDF Highlighting](https://github.com/user-attachments/assets/pdf-highlighting-screenshot.png)
+<img width="1267" height="696" alt="Screenshot 2025-09-05 165148" src="https://github.com/user-attachments/assets/658aa41b-3a74-4e0a-96b5-f13b48e7cde5" />
+
 
 *Interactive PDF highlighting with AI-powered insights and document summarization tools*
 
@@ -149,9 +152,6 @@ _Manage and organize your PDF documents with intuitive file tracking and status 
 - **Professional Layout**: Clean, modern interface optimized for research and document review
 - **Full-Screen Mode**: Keyboard shortcuts (Esc) for distraction-free reading experience
 
-### Document Management
-
-Organize and manage your PDF library
 
 ---
 
@@ -519,4 +519,5 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
