@@ -235,6 +235,7 @@ config:
   layout: elk
   look: handDrawn
   theme: redux-dark
+  themeVariables: {}
 ---
 flowchart TB
  subgraph Frontend["🖥️ Frontend"]
@@ -647,6 +648,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
