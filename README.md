@@ -133,7 +133,8 @@ Manage and organize your PDF documents with intuitive file tracking and status i
 
 <div align="center">
 
-<img width="2537" height="1591" alt="image" src="https://github.com/user-attachments/assets/edf1ed8b-b585-405a-ba06-87d11b827050" />
+<img width="2527" height="1592" alt="image" src="https://github.com/user-attachments/assets/3fcd6722-7415-45ee-bd3d-33f0f5e2c7ee" />
+
 
 
 
@@ -522,6 +523,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
