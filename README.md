@@ -133,7 +133,8 @@ Manage and organize your PDF documents with intuitive file tracking and status i
 
 <div align="center">
 
-<img width="1267" height="696" alt="Screenshot 2025-09-05 165148" src="https://github.com/user-attachments/assets/658aa41b-3a74-4e0a-96b5-f13b48e7cde5" />
+<img width="2537" height="1591" alt="image" src="https://github.com/user-attachments/assets/edf1ed8b-b585-405a-ba06-87d11b827050" />
+
 
 
 *Interactive PDF highlighting with AI-powered insights and document summarization tools*
@@ -521,6 +522,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
