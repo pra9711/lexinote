@@ -94,7 +94,7 @@ _Experience the magic of AI-powered document analysis_
 
 <div align="center">
 
-![Lexinote Homepage](https://github.com/user-attachments/assets/homepage-screenshot.png)
+![Lexinote Homepage](https://github.com/user-attachments/assets/homepage-screenshot.png
 
 _Transform your PDFs into intelligent conversations with our beautiful, modern interface_
 
@@ -104,7 +104,8 @@ _Transform your PDFs into intelligent conversations with our beautiful, modern i
 
 <div align="center">
 
-![Lexinote Dashboard](https://github.com/user-attachments/assets/dashboard-screenshot.png)
+<img width="1278" height="695" alt="image" src="https://github.com/user-attachments/assets/0b693b48-c9d6-4985-b575-3a07edec800c" />
+
 
 _Manage and organize your PDF documents with intuitive file tracking and status indicators_
 
@@ -518,3 +519,4 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
