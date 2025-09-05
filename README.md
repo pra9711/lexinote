@@ -222,21 +222,141 @@ lexinote/
 └── 📄 next.config.mjs           # Next.js configuration
 ```
 
+
 ## 🏗️ Architecture Overview
 
 Lexinote is built on a modern, scalable architecture designed for AI-powered document processing and real-time interactions.
 
+### System Architecture Diagram
+
+```mermaid
+graph TB
+    %% User Interface Layer
+    subgraph "Frontend Layer"
+        UI[React UI Components]
+        PDF[PDF Viewer]
+        CHAT[AI Chat Interface]
+        DASH[Dashboard]
+    end
+
+    %% Application Layer
+    subgraph "Next.js 14 App Router"
+        PAGES[Pages & Layouts]
+        API[API Routes]
+        MW[Middleware]
+        SC[Server Components]
+    end
+
+    %% API Layer
+    subgraph "tRPC Layer"
+        TRPC[tRPC Server]
+        ROUTES[Type-safe Routes]
+        CTX[Context & Auth]
+    end
+
+    %% Business Logic
+    subgraph "Core Services"
+        FILE[File Management]
+        AI_SERVICE[AI Processing]
+        VECTOR[Vector Operations]
+        BILLING[Billing Service]
+    end
+
+    %% External Services
+    subgraph "AI & ML Services"
+        GOOGLE_AI[Google Generative AI]
+        LANGCHAIN[LangChain]
+        EMBEDDINGS[Gemini Embeddings]
+    end
+
+    subgraph "Data Storage"
+        POSTGRES[(PostgreSQL)]
+        PINECONE[(Pinecone Vector DB)]
+        UPLOADS[UploadThing Storage]
+    end
+
+    subgraph "External APIs"
+        KINDE[Kinde Auth]
+        STRIPE[Stripe Payments]
+        VERCEL[Vercel Hosting]
+    end
+
+    %% Data Flow
+    UI --> PAGES
+    PDF --> PAGES
+    CHAT --> PAGES
+    DASH --> PAGES
+
+    PAGES --> API
+    API --> TRPC
+    MW --> CTX
+
+    TRPC --> FILE
+    TRPC --> AI_SERVICE
+    TRPC --> VECTOR
+    TRPC --> BILLING
+
+    FILE --> POSTGRES
+    FILE --> UPLOADS
+
+    AI_SERVICE --> GOOGLE_AI
+    AI_SERVICE --> LANGCHAIN
+    VECTOR --> PINECONE
+    VECTOR --> EMBEDDINGS
+
+    BILLING --> STRIPE
+    CTX --> KINDE
+
+    %% Styling
+    classDef frontend fill:#e1f5fe
+    classDef backend fill:#f3e5f5
+    classDef database fill:#e8f5e8
+    classDef external fill:#fff3e0
+
+    class UI,PDF,CHAT,DASH frontend
+    class PAGES,API,MW,SC,TRPC,ROUTES,CTX backend
+    class POSTGRES,PINECONE,UPLOADS database
+    class GOOGLE_AI,LANGCHAIN,EMBEDDINGS,KINDE,STRIPE,VERCEL external
+```
+
+### Document Processing Pipeline
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant tRPC
+    participant UploadThing
+    participant LangChain
+    participant GoogleAI
+    participant Pinecone
+    participant PostgreSQL
+
+    User->>Frontend: Upload PDF
+    Frontend->>tRPC: File upload request
+    tRPC->>UploadThing: Store file
+    UploadThing-->>tRPC: File URL
+
+    tRPC->>LangChain: Extract text from PDF
+    LangChain-->>tRPC: Extracted text chunks
+
+    tRPC->>GoogleAI: Generate embeddings
+    GoogleAI-->>tRPC: Vector embeddings
+
+    tRPC->>Pinecone: Store vectors
+    tRPC->>PostgreSQL: Store metadata
+
+    PostgreSQL-->>tRPC: Confirmation
+    Pinecone-->>tRPC: Confirmation
+    tRPC-->>Frontend: Processing complete
+    Frontend-->>User: Ready for AI chat
+```
+
+### Key Architectural Principles
+
 - **AI-First Design**: The core of Lexinote is powered by advanced language models. Documents are processed through a sophisticated pipeline that converts PDFs into searchable vector embeddings, enabling semantic search and context-aware responses.
 
 - **Vector Search Engine**: The application leverages **Pinecone** as a vector database for storing document embeddings. When users ask questions, the system performs semantic similarity searches to find relevant document sections before generating AI responses.
-
-- **Document Processing Pipeline**:
-
-  - **Upload**: Secure file upload with progress tracking via UploadThing
-  - **Processing**: PDF parsing and text extraction using LangChain
-  - **Vectorization**: Content conversion to vector embeddings using Google's Generative AI
-  - **Indexing**: Storage in Pinecone vector database with document namespacing
-  - **Ready**: Document available for AI-powered interactions
 
 - **Type-Safe API Layer**: Built with **tRPC**, ensuring end-to-end type safety from the database to the frontend. This eliminates runtime errors and provides excellent developer experience with auto-completion and compile-time checks.
 
@@ -523,6 +643,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
