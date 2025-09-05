@@ -322,6 +322,10 @@ graph TB
 ### Document Processing Pipeline
 
 ```mermaid
+---
+config:
+  theme: forest
+---
 sequenceDiagram
     participant U as 👤 User
     participant F as 🖥️ Frontend
@@ -651,6 +655,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
