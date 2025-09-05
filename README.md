@@ -108,7 +108,7 @@ _Transform your PDFs into intelligent conversations with our beautiful, modern i
 <img width="1278" height="695" alt="image" src="https://github.com/user-attachments/assets/0b693b48-c9d6-4985-b575-3a07edec800c" />
 
 
-_Manage and organize your PDF documents with intuitive file tracking and status indicators_
+Manage and organize your PDF documents with intuitive file tracking and status indicators
 
 </div>
 
@@ -445,7 +445,8 @@ Have an idea? We'd love to hear it! Please include:
 
 <div align="center">
 
-![Lexinote Performance](https://github.com/user-attachments/assets/pagespeed-insights-screenshot.png)
+<img width="1267" height="696" alt="Screenshot 2025-09-05 165148" src="https://github.com/user-attachments/assets/70806106-7f2f-4b52-b3e7-77c7065a5d1f" />
+
 
 *Outstanding performance scores across all key metrics - 98 Performance, 95 Accessibility, 100 Best Practices, 100 SEO*
 
@@ -519,5 +520,6 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
