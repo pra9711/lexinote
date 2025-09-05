@@ -322,10 +322,7 @@ graph TB
 ### Document Processing Pipeline
 
 ```mermaid
----
-config:
-  theme: forest
----
+
 sequenceDiagram
     participant U as 👤 User
     participant F as 🖥️ Frontend
@@ -335,7 +332,7 @@ sequenceDiagram
     participant GA as 🤖 GoogleAI
     participant PC as 🔍 Pinecone
     participant PG as 🗄️ PostgreSQL
-
+    autonumber
     Note over U,PG: 📋 PDF Upload & Processing Pipeline
 
     U->>+F: Upload PDF
@@ -655,6 +652,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
