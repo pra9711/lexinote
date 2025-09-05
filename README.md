@@ -232,7 +232,7 @@ Lexinote is built on a modern, scalable architecture designed for AI-powered doc
 ```mermaid
 graph TB
     %% User Interface Layer
-    subgraph "Frontend Layer"
+    subgraph Frontend["🖥️ Frontend Layer"]
         UI[React UI Components]
         PDF[PDF Viewer]
         CHAT[AI Chat Interface]
@@ -240,7 +240,7 @@ graph TB
     end
 
     %% Application Layer
-    subgraph "Next.js 14 App Router"
+    subgraph NextJS["⚡ Next.js 14 App Router"]
         PAGES[Pages & Layouts]
         API[API Routes]
         MW[Middleware]
@@ -248,14 +248,14 @@ graph TB
     end
 
     %% API Layer
-    subgraph "tRPC Layer"
+    subgraph tRPCLayer["🔗 tRPC API Layer"]
         TRPC[tRPC Server]
         ROUTES[Type-safe Routes]
         CTX[Context & Auth]
     end
 
     %% Business Logic
-    subgraph "Core Services"
+    subgraph CoreServices["⚙️ Core Services"]
         FILE[File Management]
         AI_SERVICE[AI Processing]
         VECTOR[Vector Operations]
@@ -263,19 +263,19 @@ graph TB
     end
 
     %% External Services
-    subgraph "AI & ML Services"
+    subgraph AIServices["🤖 AI & ML Services"]
         GOOGLE_AI[Google Generative AI]
         LANGCHAIN[LangChain]
         EMBEDDINGS[Gemini Embeddings]
     end
 
-    subgraph "Data Storage"
+    subgraph DataStorage["💾 Data Storage"]
         POSTGRES[(PostgreSQL)]
         PINECONE[(Pinecone Vector DB)]
         UPLOADS[UploadThing Storage]
     end
 
-    subgraph "External APIs"
+    subgraph ExternalAPIs["🌐 External APIs"]
         KINDE[Kinde Auth]
         STRIPE[Stripe Payments]
         VERCEL[Vercel Hosting]
@@ -307,11 +307,11 @@ graph TB
     BILLING --> STRIPE
     CTX --> KINDE
 
-    %% Styling
-    classDef frontend fill:#e1f5fe
-    classDef backend fill:#f3e5f5
-    classDef database fill:#e8f5e8
-    classDef external fill:#fff3e0
+    %% Enhanced Styling for Better Visibility
+    classDef frontend fill:#3b82f6,stroke:#1e40af,stroke-width:2px,color:#ffffff
+    classDef backend fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#ffffff
+    classDef database fill:#10b981,stroke:#059669,stroke-width:2px,color:#ffffff
+    classDef external fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#ffffff
 
     class UI,PDF,CHAT,DASH frontend
     class PAGES,API,MW,SC,TRPC,ROUTES,CTX backend
@@ -323,33 +323,40 @@ graph TB
 
 ```mermaid
 sequenceDiagram
-    participant User
-    participant Frontend
-    participant tRPC
-    participant UploadThing
-    participant LangChain
-    participant GoogleAI
-    participant Pinecone
-    participant PostgreSQL
+    participant U as 👤 User
+    participant F as 🖥️ Frontend
+    participant T as 🔗 tRPC
+    participant UT as 📁 UploadThing
+    participant LC as 📄 LangChain
+    participant GA as 🤖 GoogleAI
+    participant PC as 🔍 Pinecone
+    participant PG as 🗄️ PostgreSQL
 
-    User->>Frontend: Upload PDF
-    Frontend->>tRPC: File upload request
-    tRPC->>UploadThing: Store file
-    UploadThing-->>tRPC: File URL
+    Note over U,PG: 📋 PDF Upload & Processing Pipeline
 
-    tRPC->>LangChain: Extract text from PDF
-    LangChain-->>tRPC: Extracted text chunks
+    U->>+F: Upload PDF
+    F->>+T: File upload request
+    T->>+UT: Store file
+    UT-->>-T: File URL
 
-    tRPC->>GoogleAI: Generate embeddings
-    GoogleAI-->>tRPC: Vector embeddings
+    Note over T,LC: 📝 Text Extraction Phase
+    T->>+LC: Extract text from PDF
+    LC-->>-T: Extracted text chunks
 
-    tRPC->>Pinecone: Store vectors
-    tRPC->>PostgreSQL: Store metadata
+    Note over T,GA: 🧠 AI Processing Phase
+    T->>+GA: Generate embeddings
+    GA-->>-T: Vector embeddings
 
-    PostgreSQL-->>tRPC: Confirmation
-    Pinecone-->>tRPC: Confirmation
-    tRPC-->>Frontend: Processing complete
-    Frontend-->>User: Ready for AI chat
+    Note over T,PG: 💾 Storage Phase
+    T->>+PC: Store vectors
+    T->>+PG: Store metadata
+
+    PG-->>-T: ✅ Confirmation
+    PC-->>-T: ✅ Confirmation
+    T-->>-F: Processing complete
+    F-->>-U: 🎉 Ready for AI chat
+
+    Note over U,PG: 🚀 Document Ready for AI Conversations
 ```
 
 ### Key Architectural Principles
@@ -365,6 +372,7 @@ sequenceDiagram
 - **Subscription & Security**: Integrated with **Stripe** for subscription management and **Kinde Auth** for secure authentication, supporting both email/password and OAuth providers.
 
 ---
+
 
 ## 🔧 Configuration & Deployment
 
@@ -643,6 +651,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
