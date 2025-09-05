@@ -232,7 +232,7 @@ Lexinote is built on a modern, scalable architecture designed for AI-powered doc
 ```mermaid
 ---
 config:
-  layout: elk
+  layout: dagre
   look: handDrawn
   theme: redux-dark
   themeVariables: {}
@@ -648,6 +648,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
