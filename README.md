@@ -445,7 +445,8 @@ Have an idea? We'd love to hear it! Please include:
 
 <div align="center">
 
-<img width="1267" height="696" alt="Screenshot 2025-09-05 165148" src="https://github.com/user-attachments/assets/70806106-7f2f-4b52-b3e7-77c7065a5d1f" />
+<img width="2532" height="1273" alt="image" src="https://github.com/user-attachments/assets/350cf4c5-5e43-434d-b702-55c1ec042d12" />
+
 
 
 *Outstanding performance scores across all key metrics - 98 Performance, 95 Accessibility, 100 Best Practices, 100 SEO*
@@ -520,6 +521,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
