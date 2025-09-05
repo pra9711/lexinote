@@ -97,7 +97,7 @@ _Experience the magic of AI-powered document analysis_
 <img width="1268" height="700" alt="Screenshot 2025-09-05 164234" src="https://github.com/user-attachments/assets/5b74a573-1337-4093-8947-fc35d11ec4c3" />
 
 
-_Transform your PDFs into intelligent conversations with our beautiful, modern interface
+Transform your PDFs into intelligent conversations with our beautiful, modern interface
 
 </div>
 
@@ -520,6 +520,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
