@@ -230,95 +230,90 @@ Lexinote is built on a modern, scalable architecture designed for AI-powered doc
 ### System Architecture Diagram
 
 ```mermaid
-graph TB
-    %% User Interface Layer
-    subgraph Frontend["🖥️ Frontend Layer"]
-        UI[React UI Components]
-        PDF[PDF Viewer]
-        CHAT[AI Chat Interface]
-        DASH[Dashboard]
-    end
-
-    %% Application Layer
-    subgraph NextJS["⚡ Next.js 14 App Router"]
-        PAGES[Pages & Layouts]
-        API[API Routes]
-        MW[Middleware]
-        SC[Server Components]
-    end
-
-    %% API Layer
-    subgraph tRPCLayer["🔗 tRPC API Layer"]
-        TRPC[tRPC Server]
-        ROUTES[Type-safe Routes]
-        CTX[Context & Auth]
-    end
-
-    %% Business Logic
-    subgraph CoreServices["⚙️ Core Services"]
-        FILE[File Management]
-        AI_SERVICE[AI Processing]
-        VECTOR[Vector Operations]
-        BILLING[Billing Service]
-    end
-
-    %% External Services
-    subgraph AIServices["🤖 AI & ML Services"]
-        GOOGLE_AI[Google Generative AI]
-        LANGCHAIN[LangChain]
-        EMBEDDINGS[Gemini Embeddings]
-    end
-
-    subgraph DataStorage["💾 Data Storage"]
-        POSTGRES[(PostgreSQL)]
-        PINECONE[(Pinecone Vector DB)]
-        UPLOADS[UploadThing Storage]
-    end
-
-    subgraph ExternalAPIs["🌐 External APIs"]
-        KINDE[Kinde Auth]
-        STRIPE[Stripe Payments]
-        VERCEL[Vercel Hosting]
-    end
-
-    %% Data Flow
+---
+config:
+  layout: elk
+  look: handDrawn
+  theme: redux-dark
+---
+flowchart TB
+ subgraph Frontend["🖥️ Frontend"]
+        UI["React Components"]
+        PDF["PDF Viewer"]
+        CHAT["Chat Interface"]
+        DASH["Dashboard"]
+  end
+ subgraph NextJS["⚡ Next.js"]
+        PAGES["Pages"]
+        API["API Routes"]
+        MW["Middleware"]
+        SC["Components"]
+  end
+ subgraph tRPCLayer["🔗 tRPC"]
+        TRPC["Server"]
+        ROUTES["Routes"]
+        CTX["Auth"]
+  end
+ subgraph CoreServices["⚙️ Services"]
+        FILE["Files"]
+        AI_SERVICE["AI"]
+        VECTOR["Vectors"]
+        BILLING["Billing"]
+  end
+ subgraph AIServices["🤖 AI/ML"]
+        GOOGLE_AI["Google AI"]
+        LANGCHAIN["LangChain"]
+        EMBEDDINGS["Embeddings"]
+  end
+ subgraph DataStorage["💾 Storage"]
+        POSTGRES[("PostgreSQL")]
+        PINECONE[("Pinecone")]
+        UPLOADS["UploadThing"]
+  end
+ subgraph ExternalAPIs["🌐 APIs"]
+        KINDE["Kinde"]
+        STRIPE["Stripe"]
+        VERCEL["Vercel"]
+  end
     UI --> PAGES
     PDF --> PAGES
     CHAT --> PAGES
     DASH --> PAGES
-
     PAGES --> API
     API --> TRPC
     MW --> CTX
-
-    TRPC --> FILE
-    TRPC --> AI_SERVICE
-    TRPC --> VECTOR
-    TRPC --> BILLING
-
-    FILE --> POSTGRES
-    FILE --> UPLOADS
-
-    AI_SERVICE --> GOOGLE_AI
-    AI_SERVICE --> LANGCHAIN
-    VECTOR --> PINECONE
-    VECTOR --> EMBEDDINGS
-
+    TRPC --> FILE & AI_SERVICE & VECTOR & BILLING
+    FILE --> POSTGRES & UPLOADS
+    AI_SERVICE --> GOOGLE_AI & LANGCHAIN
+    VECTOR --> PINECONE & EMBEDDINGS
     BILLING --> STRIPE
     CTX --> KINDE
-
-    %% Enhanced Styling for Better Visibility
+     UI:::frontend
+     PDF:::frontend
+     CHAT:::frontend
+     DASH:::frontend
+     PAGES:::backend
+     API:::backend
+     MW:::backend
+     SC:::backend
+     TRPC:::backend
+     ROUTES:::backend
+     CTX:::backend
+     GOOGLE_AI:::external
+     LANGCHAIN:::external
+     EMBEDDINGS:::external
+     POSTGRES:::database
+     PINECONE:::database
+     UPLOADS:::database
+     KINDE:::external
+     STRIPE:::external
+     VERCEL:::external
     classDef frontend fill:#3b82f6,stroke:#1e40af,stroke-width:2px,color:#ffffff
     classDef backend fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#ffffff
     classDef database fill:#10b981,stroke:#059669,stroke-width:2px,color:#ffffff
     classDef external fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#ffffff
 
-    class UI,PDF,CHAT,DASH frontend
-    class PAGES,API,MW,SC,TRPC,ROUTES,CTX backend
-    class POSTGRES,PINECONE,UPLOADS database
-    class GOOGLE_AI,LANGCHAIN,EMBEDDINGS,KINDE,STRIPE,VERCEL external
 ```
-
 ### Document Processing Pipeline
 
 ```mermaid
@@ -652,6 +647,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
