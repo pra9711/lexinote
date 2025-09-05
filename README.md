@@ -232,50 +232,61 @@ Lexinote is built on a modern, scalable architecture designed for AI-powered doc
 ```mermaid
 ---
 config:
-  layout: dagre
+  layout: elk
   look: handDrawn
   theme: redux-dark
   themeVariables: {}
 ---
 flowchart TB
- subgraph Frontend["🖥️ Frontend"]
+    subgraph Frontend["🖥️ Frontend"]
         UI["React Components"]
         PDF["PDF Viewer"]
         CHAT["Chat Interface"]
         DASH["Dashboard"]
-  end
- subgraph NextJS["⚡ Next.js"]
+    end
+    
+    subgraph NextJS["⚡ Next.js"]
         PAGES["Pages"]
         API["API Routes"]
         MW["Middleware"]
         SC["Components"]
-  end
- subgraph tRPCLayer["🔗 tRPC"]
+    end
+    
+    subgraph tRPCLayer["🔗 tRPC"]
         TRPC["Server"]
         ROUTES["Routes"]
         CTX["Auth"]
-  end
- subgraph CoreServices["⚙️ Services"]
+    end
+    
+    subgraph CoreServices["⚙️ Services"]
         FILE["Files"]
         AI_SERVICE["AI"]
         VECTOR["Vectors"]
         BILLING["Billing"]
-  end
- subgraph AIServices["🤖 AI/ML"]
+    end
+    
+    subgraph DatabaseLayer["🗄️ Database Layer"]
+        PRISMA["Prisma ORM"]
+    end
+    
+    subgraph AIServices["🤖 AI/ML"]
         GOOGLE_AI["Google AI"]
         LANGCHAIN["LangChain"]
         EMBEDDINGS["Embeddings"]
-  end
- subgraph DataStorage["💾 Storage"]
+    end
+    
+    subgraph DataStorage["💾 Storage"]
         POSTGRES[("PostgreSQL")]
         PINECONE[("Pinecone")]
         UPLOADS["UploadThing"]
-  end
- subgraph ExternalAPIs["🌐 APIs"]
+    end
+    
+    subgraph ExternalAPIs["🌐 APIs"]
         KINDE["Kinde"]
         STRIPE["Stripe"]
         VERCEL["Vercel"]
-  end
+    end
+    
     UI --> PAGES
     PDF --> PAGES
     CHAT --> PAGES
@@ -284,35 +295,41 @@ flowchart TB
     API --> TRPC
     MW --> CTX
     TRPC --> FILE & AI_SERVICE & VECTOR & BILLING
-    FILE --> POSTGRES & UPLOADS
+    FILE --> PRISMA
+    PRISMA --> POSTGRES
+    FILE --> UPLOADS
     AI_SERVICE --> GOOGLE_AI & LANGCHAIN
     VECTOR --> PINECONE & EMBEDDINGS
     BILLING --> STRIPE
     CTX --> KINDE
-     UI:::frontend
-     PDF:::frontend
-     CHAT:::frontend
-     DASH:::frontend
-     PAGES:::backend
-     API:::backend
-     MW:::backend
-     SC:::backend
-     TRPC:::backend
-     ROUTES:::backend
-     CTX:::backend
-     GOOGLE_AI:::external
-     LANGCHAIN:::external
-     EMBEDDINGS:::external
-     POSTGRES:::database
-     PINECONE:::database
-     UPLOADS:::database
-     KINDE:::external
-     STRIPE:::external
-     VERCEL:::external
+    
+    UI:::frontend
+    PDF:::frontend
+    CHAT:::frontend
+    DASH:::frontend
+    PAGES:::backend
+    API:::backend
+    MW:::backend
+    SC:::backend
+    TRPC:::backend
+    ROUTES:::backend
+    CTX:::backend
+    PRISMA:::database
+    GOOGLE_AI:::external
+    LANGCHAIN:::external
+    EMBEDDINGS:::external
+    POSTGRES:::database
+    PINECONE:::database
+    UPLOADS:::database
+    KINDE:::external
+    STRIPE:::external
+    VERCEL:::external
+    
     classDef frontend fill:#3b82f6,stroke:#1e40af,stroke-width:2px,color:#ffffff
     classDef backend fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#ffffff
     classDef database fill:#10b981,stroke:#059669,stroke-width:2px,color:#ffffff
     classDef external fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#ffffff
+
 
 ```
 ### Document Processing Pipeline
@@ -648,6 +665,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
