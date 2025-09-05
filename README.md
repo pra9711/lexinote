@@ -2,16 +2,27 @@
 
 <div align="center">
 
-![Lexinote Logo](https://img.shields.io/badge/Lexinote-AI%20PDF%20Platform-blue?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K)
+![Lexinote Logo](https://img.shields.io/badge/✨_Lexinote-AI%20PDF%20Platform-6366f1?style=for-the-badge&labelColor=8b5cf6)
 
 [![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-lexinote.tech-4285f4?style=for-the-badge)](https://www.lexinote.tech/)
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/pra9711/lexinote)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+[![tRPC](https://img.shields.io/badge/tRPC-End--to--End-2596be?style=for-the-badge)](https://trpc.io/)
+[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
+[![LangChain](https://img.shields.io/badge/LangChain-AI_Framework-1C3C3C?style=for-the-badge)](https://langchain.com/)
+[![Kinde](https://img.shields.io/badge/Kinde-Authentication-FF6B35?style=for-the-badge)](https://kinde.com/)
+[![Stripe](https://img.shields.io/badge/Stripe-Billing-635bff?style=for-the-badge&logo=stripe)](https://stripe.com/)
+[![UploadThing](https://img.shields.io/badge/UploadThing-File_Upload-FF6B35?style=for-the-badge)](https://uploadthing.com/)
+[![Pinecone](https://img.shields.io/badge/Pinecone-Vector_DB-00a37f?style=for-the-badge)](https://www.pinecone.io/)
+[![Vercel](https://img.shields.io/badge/Vercel-Hosted-000000?style=for-the-badge&logo=vercel)](https://vercel.com/)
 
 **Transform your PDFs into intelligent conversations with cutting-edge AI technology**
 
-[🎯 Features](#-features) • [🚀 Quick Start](#-quick-start) • [🛠️ Tech Stack](#️-tech-stack) • [📖 Documentation](#-documentation) • [🤝 Contributing](#-contributing)
+[🎯 Features](#-key-features) • [🚀 Getting Started](#-getting-started) • [🛠️ Tech Stack](#️-tech-stack) • [📡 API](#-api-and-key-features) • [🤝 Contributing](#-contributing)
 
 </div>
 
@@ -21,57 +32,262 @@
 
 Lexinote is a revolutionary AI-powered platform that transforms static PDF documents into interactive, intelligent conversations. Upload any PDF and instantly unlock the power to chat with your documents, extract insights, generate summaries, and discover hidden knowledge through advanced AI analysis.
 
-### 🎬 See It In Action
+## 🎬 See It In Action
 
 <div align="center">
 
-![Lexinote Demo](https://img.shields.io/badge/📹_Watch_Demo-Coming_Soon-ff6b6b?style=for-the-badge)
+[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-VISIT_HERE-4CAF50?style=for-the-badge&labelColor=gray)](https://www.lexinote.tech/)
+[![GitHub](https://img.shields.io/badge/🐙_GITHUB-VIEW_SOURCE-1E88E5?style=for-the-badge&labelColor=gray&logo=github)](https://github.com/pra9711/lexinote)
 
-*Experience the magic of AI-powered document analysis*
+_Experience the magic of AI-powered document analysis_
 
 </div>
 
----
+## ✨ Highlights
+
+- **AI Chat with PDFs** - Vector search and context-aware answers with streaming responses
+- **Advanced PDF Viewer** - Zoom, rotate, fullscreen, annotations, and bookmarks
+- **Secure & Scalable** - OAuth authentication, encrypted storage, and Stripe billing
+- **Modern Tech Stack** - Next.js 14, tRPC, Prisma, Pinecone, and Google Generative AI
+- **Beautiful UX** - Polished UI with Tailwind CSS, personalized settings, and smooth animations
 
 ## 🌟 Key Features
 
 ### 🤖 **AI-Powered Chat Interface**
+
 - **Intelligent Conversations**: Chat naturally with your PDFs using advanced language models
 - **Context-Aware Responses**: Get accurate answers based on document content
 - **Multi-Language Support**: Works with documents in various languages
 - **Real-Time Processing**: Instant responses with streaming AI technology
 
 ### 📄 **Advanced PDF Management**
+
 - **Smart Upload System**: Drag-and-drop interface with progress tracking
 - **Document Organization**: Custom icons, colors, and categorization
 - **Version Control**: Track document changes and updates
 - **Batch Processing**: Handle multiple documents simultaneously
 
 ### 🎨 **Rich User Experience**
+
 - **Interactive PDF Viewer**: Advanced rendering with zoom, rotation, and navigation
 - **Highlighting & Annotations**: Mark important sections with color-coded highlights
 - **Bookmarking System**: Save and organize important pages
-- **Dark/Light Mode**: Customizable themes for comfortable reading
+- **Personalized Settings**: Customize the app to your preferences
 
 ### 🔒 **Enterprise-Grade Security**
+
 - **Secure Authentication**: Powered by Kinde Auth with OAuth support
 - **Data Encryption**: End-to-end encryption for document security
 - **Privacy First**: Your documents are never shared or stored insecurely
-- **GDPR Compliant**: Full compliance with data protection regulations
+- **Billing Integration**: Stripe for seamless payment processing
 
 ### 💎 **Premium Features**
+
 - **Unlimited Uploads**: No restrictions on document quantity (Pro plan)
 - **Large File Support**: Handle documents up to 16MB (Pro plan)
 - **Priority Processing**: Faster AI analysis and responses
 - **Advanced Analytics**: Detailed insights and usage statistics
 
+## 📸 Screenshots
+
+### Homepage - Landing Experience
+
+<div align="center">
+
+![Lexinote Homepage](https://github.com/user-attachments/assets/homepage-screenshot.png)
+
+_Transform your PDFs into intelligent conversations with our beautiful, modern interface_
+
+</div>
+
+### Dashboard - File Management
+
+<div align="center">
+
+![Lexinote Dashboard](https://github.com/user-attachments/assets/dashboard-screenshot.png)
+
+_Manage and organize your PDF documents with intuitive file tracking and status indicators_
+
+</div>
+
+**Key Features Shown:**
+
+- **File Statistics**: Track total files, processing status, completed documents, and failed uploads
+- **Smart Organization**: Search, filter, and sort your document library
+- **Status Tracking**: Real-time processing indicators with color-coded status badges
+- **Quick Actions**: Upload, edit, share, and delete files with one-click actions
+- **Clean Interface**: Modern design with easy-to-use file cards and metadata display and modify files
+
+### AI Chat Interface & PDF Viewer with Annotations
+
+<div align="center">
+
+![Lexinote PDF Viewer](https://github.com/user-attachments/assets/pdf-viewer-screenshot.png)
+
+*Advanced PDF viewing with AI-powered chat interface and intelligent document analysis*
+
+</div>
+
+<div align="center">
+
+![Lexinote PDF Highlighting](https://github.com/user-attachments/assets/pdf-highlighting-screenshot.png)
+
+*Interactive PDF highlighting with AI-powered insights and document summarization tools*
+
+</div>
+
+**Key Features Shown:**
+- **Split-Screen Interface**: PDF document on the left, AI chat on the right for seamless interaction
+- **Advanced PDF Controls**: Zoom, page navigation, bookmarks, and highlighting tools
+- **AI Assistant Integration**: LexiNote AI Assistant powered by advanced AI for real-time document analysis
+- **Intelligent Responses**: Context-aware answers with bullet-point summaries and detailed insights
+- **Document Analysis**: AI extracts key points, methodologies, algorithms, and performance metrics
+- **Interactive Chat**: Ask questions about specific sections and get instant, relevant responses
+- **Highlighting & Annotations**: Yellow highlighting with active annotation tools for marking important sections
+- **Document Actions**: Summarize document, find key points, and explain sections with AI assistance
+- **Professional Layout**: Clean, modern interface optimized for research and document review
+- **Full-Screen Mode**: Keyboard shortcuts (Esc) for distraction-free reading experience
+
+### Document Management
+
+Organize and manage your PDF library
+
 ---
 
-## 🚀 Quick Start
+## 🛠️ Tech Stack
+
+### **Frontend**
+
+- **[Next.js 14](https://nextjs.org/)** - React framework with App Router
+- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[Radix UI](https://www.radix-ui.com/)** - Accessible component primitives
+- **[Framer Motion](https://www.framer.com/motion/)** - Animation library
+- **[React PDF](https://react-pdf.org/)** - PDF rendering in React
+
+### **Backend**
+
+- **[tRPC](https://trpc.io/)** - End-to-end typesafe APIs
+- **[Prisma](https://www.prisma.io/)** - Next-generation ORM
+- **[PostgreSQL](https://www.postgresql.org/)** - Robust relational database
+- **[Pinecone](https://www.pinecone.io/)** - Vector database for AI embeddings
+
+### **AI & ML**
+
+- **[LangChain](https://langchain.com/)** - AI application framework
+- **[Google Generative AI](https://ai.google.dev/)** - Advanced language models and chat functionality
+- **[Google Gemini Embeddings](https://ai.google.dev/)** - Vector embeddings for semantic search
+- **[OpenAI](https://openai.com/)** - GPT models for enhanced AI responses
+
+### **Authentication & Payments**
+
+- **[Kinde Auth](https://kinde.com/)** - Modern authentication platform
+- **[Stripe](https://stripe.com/)** - Payment processing and subscriptions
+
+### **Infrastructure**
+
+- **[UploadThing](https://uploadthing.com/)** - File upload service
+- **[Vercel](https://vercel.com/)** - Deployment and hosting platform
+
+---
+
+## 📁 Project Structure
+
+```
+lexinote/
+├── 📁 src/
+│   ├── 📁 app/                    # Next.js App Router
+│   │   ├── 📁 api/               # API routes
+│   │   ├── 📁 dashboard/         # Dashboard pages
+│   │   ├── 📁 pricing/           # Pricing page
+│   │   └── 📄 layout.tsx         # Root layout
+│   ├── 📁 components/            # React components
+│   │   ├── 📁 ui/               # Reusable UI components
+│   │   ├── 📁 chat/             # Chat interface
+│   │   ├── 📄 Dashboard.tsx     # Main dashboard
+│   │   ├── 📄 PdfRenderer.tsx   # PDF viewer
+│   │   └── 📄 UploadButton.tsx  # File upload
+│   ├── 📁 lib/                   # Utility libraries
+│   │   ├── 📄 pinecone.ts       # Vector database config
+│   │   ├── 📄 stripe.ts         # Payment processing
+│   │   └── 📄 utils.ts          # Helper functions
+│   ├── 📁 trpc/                  # tRPC configuration
+│   └── 📁 types/                 # TypeScript definitions
+├── 📁 prisma/                    # Database schema
+├── 📄 package.json               # Dependencies
+├── 📄 tailwind.config.ts         # Tailwind configuration
+└── 📄 next.config.mjs           # Next.js configuration
+```
+
+## 🏗️ Architecture Overview
+
+Lexinote is built on a modern, scalable architecture designed for AI-powered document processing and real-time interactions.
+
+- **AI-First Design**: The core of Lexinote is powered by advanced language models. Documents are processed through a sophisticated pipeline that converts PDFs into searchable vector embeddings, enabling semantic search and context-aware responses.
+
+- **Vector Search Engine**: The application leverages **Pinecone** as a vector database for storing document embeddings. When users ask questions, the system performs semantic similarity searches to find relevant document sections before generating AI responses.
+
+- **Document Processing Pipeline**:
+
+  - **Upload**: Secure file upload with progress tracking via UploadThing
+  - **Processing**: PDF parsing and text extraction using LangChain
+  - **Vectorization**: Content conversion to vector embeddings using Google's Generative AI
+  - **Indexing**: Storage in Pinecone vector database with document namespacing
+  - **Ready**: Document available for AI-powered interactions
+
+- **Type-Safe API Layer**: Built with **tRPC**, ensuring end-to-end type safety from the database to the frontend. This eliminates runtime errors and provides excellent developer experience with auto-completion and compile-time checks.
+
+- **Real-time Chat System**: The chat interface provides streaming responses from AI models, with conversation history stored in PostgreSQL and real-time updates managed through React state.
+
+- **Subscription & Security**: Integrated with **Stripe** for subscription management and **Kinde Auth** for secure authentication, supporting both email/password and OAuth providers.
+
+---
+
+## 🔧 Configuration & Deployment
+
+### Environment Variables
+
+| Variable             | Description                    | Required |
+| -------------------- | ------------------------------ | -------- |
+| `DATABASE_URL`       | PostgreSQL connection string   | ✅       |
+| `KINDE_CLIENT_ID`    | Kinde authentication client ID | ✅       |
+| `GOOGLE_API_KEY`     | Google AI API key              | ✅       |
+| `PINECONE_API_KEY`   | Pinecone vector database key   | ✅       |
+| `STRIPE_SECRET_KEY`  | Stripe payment processing key  | ✅       |
+| `UPLOADTHING_SECRET` | File upload service secret     | ✅       |
+
+### Database Schema
+
+The application uses Prisma with PostgreSQL. Key models include:
+
+- **User**: Authentication and preferences
+- **File**: Document metadata and processing status
+- **Message**: Chat conversation history
+
+### Deployment
+
+#### Vercel (Recommended)
+
+1. **Connect Repository**: Link your GitHub repository to Vercel
+2. **Environment Variables**: Add all required environment variables
+3. **Database**: Set up PostgreSQL (recommended: Neon, Supabase, or PlanetScale)
+4. **Deploy**: Automatic deployment on every push
+
+#### Manual Deployment
+
+```bash
+# Build the application
+npm run build
+
+# Start production server
+npm start
+```
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- **Node.js** 18+ 
+- **Node.js** 18+
 - **PostgreSQL** database
 - **Google AI API** key
 - **Pinecone** vector database account
@@ -151,140 +367,24 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
----
+## 📡 API and Key Features
 
-## 🛠️ Tech Stack
+### tRPC Endpoints
 
-### **Frontend**
-- **[Next.js 14](https://nextjs.org/)** - React framework with App Router
-- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript
-- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
-- **[Radix UI](https://www.radix-ui.com/)** - Accessible component primitives
-- **[Framer Motion](https://www.framer.com/motion/)** - Animation library
-- **[React PDF](https://react-pdf.org/)** - PDF rendering in React
+- `getUserFiles`: Retrieve user's uploaded documents with metadata
+- `getFile`: Get specific file details and processing status
+- `deleteFile`: Remove a document and its associated data
+- `getFileMessages`: Retrieve chat conversation history
+- `updateFile`: Update document metadata (name, icon, color)
+- `getUserSettings`: Get user preferences and settings
 
-### **Backend**
-- **[tRPC](https://trpc.io/)** - End-to-end typesafe APIs
-- **[Prisma](https://www.prisma.io/)** - Next-generation ORM
-- **[PostgreSQL](https://www.postgresql.org/)** - Robust relational database
-- **[Pinecone](https://www.pinecone.io/)** - Vector database for AI embeddings
+### Core Features
 
-### **AI & ML**
-- **[LangChain](https://langchain.com/)** - AI application framework
-- **[Google Generative AI](https://ai.google.dev/)** - Advanced language models
-- **[OpenAI](https://openai.com/)** - GPT models for chat functionality
-- **[Vector Embeddings](https://platform.openai.com/docs/guides/embeddings)** - Semantic search capabilities
-
-### **Authentication & Payments**
-- **[Kinde Auth](https://kinde.com/)** - Modern authentication platform
-- **[Stripe](https://stripe.com/)** - Payment processing and subscriptions
-
-### **Infrastructure**
-- **[UploadThing](https://uploadthing.com/)** - File upload service
-- **[Vercel](https://vercel.com/)** - Deployment and hosting platform
-
----
-
-## 📁 Project Structure
-
-```
-lexinote/
-├── 📁 src/
-│   ├── 📁 app/                    # Next.js App Router
-│   │   ├── 📁 api/               # API routes
-│   │   ├── 📁 dashboard/         # Dashboard pages
-│   │   ├── 📁 pricing/           # Pricing page
-│   │   └── 📄 layout.tsx         # Root layout
-│   ├── 📁 components/            # React components
-│   │   ├── 📁 ui/               # Reusable UI components
-│   │   ├── 📁 chat/             # Chat interface
-│   │   ├── 📄 Dashboard.tsx     # Main dashboard
-│   │   ├── 📄 PdfRenderer.tsx   # PDF viewer
-│   │   └── 📄 UploadButton.tsx  # File upload
-│   ├── 📁 lib/                   # Utility libraries
-│   │   ├── 📄 pinecone.ts       # Vector database config
-│   │   ├── 📄 stripe.ts         # Payment processing
-│   │   └── 📄 utils.ts          # Helper functions
-│   ├── 📁 trpc/                  # tRPC configuration
-│   └── 📁 types/                 # TypeScript definitions
-├── 📁 prisma/                    # Database schema
-├── 📄 package.json               # Dependencies
-├── 📄 tailwind.config.ts         # Tailwind configuration
-└── 📄 next.config.mjs           # Next.js configuration
-```
-
----
-
-## 🎯 Core Features Deep Dive
-
-### 🤖 AI Chat System
-
-The heart of Lexinote is its sophisticated AI chat system that enables natural conversations with PDF documents:
-
-- **Vector Search**: Documents are processed into embeddings using Google's Generative AI
-- **Semantic Understanding**: Advanced NLP for context-aware responses
-- **Streaming Responses**: Real-time AI responses with typing indicators
-- **Memory Management**: Conversation history and context retention
-
-### 📄 PDF Processing Pipeline
-
-1. **Upload**: Secure file upload with progress tracking
-2. **Processing**: PDF parsing and text extraction using LangChain
-3. **Vectorization**: Content conversion to vector embeddings
-4. **Indexing**: Storage in Pinecone vector database
-5. **Ready**: Document available for AI-powered interactions
-
-### 🎨 Advanced PDF Viewer
-
-- **Multi-format Support**: Optimized PDF rendering
-- **Interactive Controls**: Zoom, rotate, navigate with keyboard shortcuts
-- **Annotation Tools**: Highlighting with customizable colors
-- **Bookmark System**: Save and organize important sections
-- **Responsive Design**: Works seamlessly on desktop and mobile
-
----
-
-## 🔧 Configuration
-
-### Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `DATABASE_URL` | PostgreSQL connection string | ✅ |
-| `KINDE_CLIENT_ID` | Kinde authentication client ID | ✅ |
-| `GOOGLE_API_KEY` | Google AI API key | ✅ |
-| `PINECONE_API_KEY` | Pinecone vector database key | ✅ |
-| `STRIPE_SECRET_KEY` | Stripe payment processing key | ✅ |
-| `UPLOADTHING_SECRET` | File upload service secret | ✅ |
-
-### Database Schema
-
-The application uses Prisma with PostgreSQL. Key models include:
-
-- **User**: Authentication and preferences
-- **File**: Document metadata and processing status
-- **Message**: Chat conversation history
-
----
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. **Connect Repository**: Link your GitHub repository to Vercel
-2. **Environment Variables**: Add all required environment variables
-3. **Database**: Set up PostgreSQL (recommended: Neon, Supabase, or PlanetScale)
-4. **Deploy**: Automatic deployment on every push
-
-### Manual Deployment
-
-```bash
-# Build the application
-npm run build
-
-# Start production server
-npm start
-```
+- **Document Processing**: Automatic PDF parsing, text extraction, and vectorization
+- **AI Chat**: Context-aware conversations with streaming responses
+- **File Management**: Upload, organize, and customize document appearance
+- **User Settings**: Personalized themes, font sizes, and preferences
+- **Subscription Management**: Stripe-powered billing and plan management
 
 ---
 
@@ -295,6 +395,7 @@ We welcome contributions from the community! Here's how you can help:
 ### 🐛 Bug Reports
 
 Found a bug? Please create an issue with:
+
 - Clear description of the problem
 - Steps to reproduce
 - Expected vs actual behavior
@@ -303,6 +404,7 @@ Found a bug? Please create an issue with:
 ### 💡 Feature Requests
 
 Have an idea? We'd love to hear it! Please include:
+
 - Detailed description of the feature
 - Use cases and benefits
 - Any relevant mockups or examples
@@ -325,61 +427,46 @@ Have an idea? We'd love to hear it! Please include:
 
 ---
 
-## 📖 Documentation
-
-### API Reference
-
-The application uses tRPC for type-safe API calls. Key endpoints include:
-
-- `getUserFiles` - Retrieve user's uploaded documents
-- `getFile` - Get specific file details
-- `deleteFile` - Remove a document
-- `getFileMessages` - Retrieve chat history
-
-### Component Documentation
-
-- **Dashboard**: Main file management interface
-- **PdfRenderer**: Advanced PDF viewing component
-- **ChatWrapper**: AI chat interface
-- **UploadButton**: File upload with progress tracking
-
----
-
 ## 🔒 Security
 
 ### Data Protection
 
 - **Encryption**: All data encrypted in transit and at rest
 - **Authentication**: Secure OAuth-based authentication
-- **Authorization**: Role-based access control
+- **Secure API Endpoints**: Protected routes with input validation and sanitization
 - **Privacy**: Documents are never shared without permission
-
-### Best Practices
-
-- Regular security audits
-- Dependency vulnerability scanning
-- Secure API endpoints
-- Input validation and sanitization
 
 ---
 
 ## 📊 Performance
 
+### PageSpeed Insights - Excellent Performance Metrics
+
+<div align="center">
+
+![Lexinote Performance](https://github.com/user-attachments/assets/pagespeed-insights-screenshot.png)
+
+*Outstanding performance scores across all key metrics - 98 Performance, 95 Accessibility, 100 Best Practices, 100 SEO*
+
+</div>
+
+**Performance Highlights:**
+- **98/100 Performance Score**: Lightning-fast loading times and optimized user experience
+- **95/100 Accessibility**: Excellent accessibility compliance for all users
+- **100/100 Best Practices**: Following web development best practices and standards
+- **100/100 SEO**: Fully optimized for search engines and discoverability
+- **0.2s First Contentful Paint**: Near-instant content rendering
+- **0.5s Largest Contentful Paint**: Rapid loading of main content
+- **70ms Total Blocking Time**: Minimal delays in user interactions
+- **0 Cumulative Layout Shift**: Stable, non-shifting layout experience
+
 ### Optimization Features
 
-- **Lazy Loading**: Components loaded on demand
-- **Image Optimization**: Next.js automatic image optimization
-- **Caching**: Intelligent caching strategies
-- **CDN**: Global content delivery network
-
-### Monitoring
-
-- Real-time performance monitoring
-- Error tracking and reporting
-- User analytics and insights
-- Uptime monitoring
-
----
+- **Lazy Loading**: Components loaded on demand for faster initial page loads
+- **Image Optimization**: Next.js automatic image optimization and WebP conversion
+- **Caching**: Intelligent caching strategies with CDN distribution
+- **Code Splitting**: Automatic code splitting for optimal bundle sizes
+- **Performance Monitoring**: Real-time performance tracking and optimization
 
 ## 🌍 Roadmap
 
@@ -398,23 +485,6 @@ The application uses tRPC for type-safe API calls. Key endpoints include:
 - **Smart Categorization**: AI-powered document organization
 - **Voice Interaction**: Voice-to-text document queries
 - **Advanced Search**: Cross-document semantic search
-
----
-
-## 📞 Support
-
-### 🆘 Getting Help
-
-- **Documentation**: Check our comprehensive docs
-- **GitHub Issues**: Report bugs and request features
-- **Community**: Join our Discord community
-- **Email**: Contact us at support@lexinote.tech
-
-### 💬 Community
-
-- **Discord**: [Join our community](https://discord.gg/lexinote)
-- **Twitter**: [@lexinote](https://twitter.com/lexinote)
-- **LinkedIn**: [Lexinote Company](https://linkedin.com/company/lexinote)
 
 ---
 
@@ -443,8 +513,8 @@ Special thanks to:
 [![GitHub stars](https://img.shields.io/github/stars/pra9711/lexinote?style=social)](https://github.com/pra9711/lexinote/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/pra9711/lexinote?style=social)](https://github.com/pra9711/lexinote/network/members)
 
-**Made with ❤️ by the Lexinote Team**
+**Made with ❤️ by the Lexinote **
 
-[🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) • [🐦 Twitter](https://twitter.com/lexinote)
+[🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
