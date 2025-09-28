@@ -3,11 +3,11 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import prisma from '@/db'
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
-import { pinecone } from '@/lib/pinecone';
+import { pinecone, PINECONE_INDEX_NAME, checkPineconeHealth } from '@/lib/pinecone';
 import { PineconeStore } from "@langchain/pinecone";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { PLANS } from "@/config/stripe";
-import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
+import { createEmbeddings, testGeminiConnection, GEMINI_CONFIG } from '@/lib/geminiai';
 
 const f = createUploadthing();
 
@@ -15,7 +15,6 @@ const middleware = async () => {
   const { getUser } = getKindeServerSession();
   // This code runs on your server before upload
   const user = await getUser();
-
 
   if (!user || !user.id) throw new UploadThingError("Unauthorized");
 
@@ -52,7 +51,7 @@ const onUploadComplete = async ({ metadata, file }: {
   })
 
   try {
-    console.log(`📄 Starting processing for file: ${file.name} (${file.key})`);
+    console.log(`Starting processing for file: ${file.name} (${file.key})`);
     
     const response = await fetch(file.url);
     if (!response.ok) {
@@ -60,12 +59,12 @@ const onUploadComplete = async ({ metadata, file }: {
     }
     
     const blob = await response.blob();
-    console.log(`📥 File downloaded successfully, size: ${blob.size} bytes`);
+    console.log(`File downloaded successfully, size: ${blob.size} bytes`);
 
     const loader = new PDFLoader(blob);
     const docs = await loader.load();
     
-    console.log(`📚 PDF loaded with ${docs.length} pages`);
+    console.log(`PDF loaded with ${docs.length} pages`);
 
     const pagesAmount = docs.length;
 
@@ -76,7 +75,7 @@ const onUploadComplete = async ({ metadata, file }: {
     const isFreeExceeded = pagesAmount > PLANS.find(plan => plan.name === "Free")!.pagesPerPdf;
 
     if ((isSubscribed && isProExceeded) || (!isSubscribed && isFreeExceeded)) {
-      console.log(`❌ Page limit exceeded: ${pagesAmount} pages (${isSubscribed ? 'Pro' : 'Free'} plan)`);
+      console.log(`Page limit exceeded: ${pagesAmount} pages (${isSubscribed ? 'Pro' : 'Free'} plan)`);
       await prisma.file.update({
         data: { uploadStatus: "FAILED" },
         where: { id: createdFile.id }
@@ -84,7 +83,7 @@ const onUploadComplete = async ({ metadata, file }: {
       return;
     }
 
-    // Validate environment variables
+    // Validate environment variables and services
     if (!process.env.GOOGLE_API_KEY) {
       throw new Error("GOOGLE_API_KEY is not set in environment variables");
     }
@@ -93,30 +92,61 @@ const onUploadComplete = async ({ metadata, file }: {
       throw new Error("PINECONE_API_KEY is not set in environment variables");
     }
 
-    console.log(`🔧 Starting vectorization for ${docs.length} documents...`);
+    console.log(`Starting vectorization for ${docs.length} documents...`);
+    console.log(`Using embedding model: ${GEMINI_CONFIG.model}`);
+    console.log(`Expected embedding dimension: ${GEMINI_CONFIG.dimension}`);
 
-    // vectorise and index entire document
-    const pineconeIndex = pinecone.Index("lexinote");
-
-    const embeddings = new GoogleGenerativeAIEmbeddings({
-      apiKey: process.env.GOOGLE_API_KEY!
-    });
-
-    // Process documents in chunks to avoid memory issues
-    const chunkSize = 10;
-    for (let i = 0; i < docs.length; i += chunkSize) {
-      const chunk = docs.slice(i, i + chunkSize);
-      console.log(`🔄 Processing documents ${i + 1}-${Math.min(i + chunkSize, docs.length)} of ${docs.length}`);
-      
-      await PineconeStore.fromDocuments(
-        chunk,
-        embeddings, {
-        pineconeIndex,
-        namespace: createdFile.id
-      });
+    // Test connections before processing
+    const geminiHealthy = await testGeminiConnection();
+    if (!geminiHealthy) {
+      throw new Error("Gemini API is not accessible. Please check your API key and network connection.");
     }
 
-    console.log(`✅ Successfully vectorized and indexed ${docs.length} documents to Pinecone`);
+    const pineconeHealthy = await checkPineconeHealth(PINECONE_INDEX_NAME);
+    if (!pineconeHealthy) {
+      throw new Error(`Pinecone index '${PINECONE_INDEX_NAME}' is not accessible. Please check your configuration.`);
+    }
+
+    // vectorise and index entire document
+    const pineconeIndex = pinecone.Index(PINECONE_INDEX_NAME);
+    const embeddings = createEmbeddings();
+
+    // Process documents in smaller chunks to avoid memory and API rate limit issues
+    const chunkSize = 5; // Smaller chunks for better reliability
+    let totalProcessed = 0;
+    
+    for (let i = 0; i < docs.length; i += chunkSize) {
+      const chunk = docs.slice(i, i + chunkSize);
+      const chunkEnd = Math.min(i + chunkSize, docs.length);
+      console.log(`Processing documents ${i + 1}-${chunkEnd} of ${docs.length}`);
+      
+      try {
+        await PineconeStore.fromDocuments(
+          chunk,
+          embeddings, 
+          {
+            pineconeIndex,
+            namespace: createdFile.id,
+            textKey: 'text', // Ensure text field mapping
+          }
+        );
+        
+        totalProcessed += chunk.length;
+        console.log(`Successfully processed chunk ${Math.floor(i / chunkSize) + 1}, total: ${totalProcessed}/${docs.length}`);
+        
+        // Add delay between chunks to respect API limits
+        if (i + chunkSize < docs.length) {
+          console.log(`Waiting 2 seconds before next chunk...`);
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        }
+        
+      } catch (chunkError) {
+        console.error(`Error processing chunk ${i + 1}-${chunkEnd}:`, chunkError);
+        throw new Error(`Failed to process documents chunk ${i + 1}-${chunkEnd}: ${chunkError instanceof Error ? chunkError.message : 'Unknown error'}`);
+      }
+    }
+
+    console.log(`Successfully vectorized and indexed ${docs.length} documents to Pinecone`);
     
     await prisma.file.update({
       data: {
@@ -127,9 +157,9 @@ const onUploadComplete = async ({ metadata, file }: {
       }
     })
     
-    console.log(`✅ File processing completed successfully: ${file.name}`);
+    console.log(`File processing completed successfully: ${file.name}`);
   } catch (error) {
-    console.error(`❌ Error processing file ${file.name}:`, error);
+    console.error(`Error processing file ${file.name}:`, error);
     console.error("Error details:", {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
