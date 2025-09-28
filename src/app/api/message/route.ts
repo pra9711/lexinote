@@ -87,34 +87,59 @@ ${results.map((r) => r.pageContent).join('\n\n')}
 USER INPUT: ${message}
 `;
 
-  // Call Gemini API for completion
+  // Call Gemini API for completion using new authentication method
+  const apiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+  console.log("🔑 Gemini API Key exists:", !!apiKey);
+  console.log("📝 Prompt length:", prompt.length);
+  
+  if (!apiKey) {
+    console.error("❌ No API key found. Set GOOGLE_API_KEY or GEMINI_API_KEY in .env.local");
+    return new Response("API key not configured", { status: 500 });
+  }
+  
   const response = await fetch(
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + process.env.GOOGLE_API_KEY,
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "x-goog-api-key": apiKey,
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }]
+        contents: [{ 
+          parts: [{ 
+            text: prompt 
+          }] 
+        }]
       })
     }
   );
 
+  console.log("🌐 Gemini API Response Status:", response.status);
 
   let data;
   try {
     data = await response.json();
+    console.log("📊 Gemini API Response Data:", JSON.stringify(data, null, 2));
   } catch (e) {
+    console.error("❌ Failed to parse Gemini response:", e);
     return new Response("Gemini API returned an invalid or empty response.", { status: 500 });
   }
 
-  
-
   if (!response.ok) {
     const errorMsg = data?.error?.message || "Gemini API error";
+    console.error("❌ Gemini API Error:", errorMsg, data);
     return new Response(errorMsg, { status: response.status });
   }
 
   const completion = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  
+  if (!completion) {
+    console.error("❌ No completion text found in response:", data);
+    return new Response("No response generated from AI", { status: 500 });
+  }
+
+  console.log("✅ AI Response generated:", completion.substring(0, 100) + "...");
   
   await prisma.message.create({
     data: {
