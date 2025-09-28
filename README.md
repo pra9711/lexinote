@@ -372,7 +372,29 @@ sequenceDiagram
 
     Note over U,PG: 🚀 Document Ready for AI Conversations
 ```
-
+```mermaid
+---
+config:
+  layout: elk
+  theme: redux-dark
+  themeVariables: {}
+---
+graph TB
+    A[User Uploads PDF] --> B[UploadThing Processes File]
+    B --> C[LangChain PDFLoader]
+    C --> D[Text Extraction & Chunking]
+    D --> E[Google Gemini Embeddings]
+    E --> F[Pinecone Vector Storage]
+    F --> G[Database Status Update]
+    H[User Asks Question] --> I[Message Vectorization]
+    I --> J[Pinecone Similarity Search]
+    J --> K[Context Assembly]
+    K --> L[AI Response Generation]
+    L --> M[Chat Response]
+    style A fill:#e1f5fe
+    style F fill:#f3e5f5
+    style L fill:#e8f5e8
+```
 ### Key Architectural Principles
 
 - **AI-First Design**: The core of Lexinote is powered by advanced language models. Documents are processed through a sophisticated pipeline that converts PDFs into searchable vector embeddings, enabling semantic search and context-aware responses.
@@ -665,6 +687,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
