@@ -264,10 +264,13 @@ const UserAccountNav = ({
 
         <div className="p-2">
           <DropdownMenuItem asChild>
-            <LogoutLink className={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200",
-              "hover:bg-red-50 hover:scale-[1.02] active:scale-95 cursor-pointer group w-full"
-            )}>
+            <LogoutLink 
+              postLogoutRedirectURL="/"
+              className={cn(
+                "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200",
+                "hover:bg-red-50 hover:scale-[1.02] active:scale-95 cursor-pointer group w-full"
+              )}
+            >
               <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center group-hover:bg-red-200 transition-colors">
                 <LogOut className="w-4 h-4 text-red-600" />
               </div>

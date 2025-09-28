@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 interface MobileNavProps {
   isAuth: boolean;
@@ -168,13 +169,13 @@ const MobileNav = ({ isAuth, userInfo }: MobileNavProps) => {
                   </li>
                   <li className="my-2 h-px w-full bg-gray-200" />
                   <li>
-                    <Link
+                    <LogoutLink
+                      postLogoutRedirectURL="/"
                       className="flex items-center w-full font-semibold py-3 px-2 rounded-lg hover:bg-red-50 text-red-600 transition-colors"
-                      href="/api/auth/logout"
                     >
                       <LogOut className="mr-3 h-5 w-5" />
                       Sign out
-                    </Link>
+                    </LogoutLink>
                   </li>
                 </>
               )}
