@@ -57,7 +57,7 @@ _Experience the magic of AI-powered document analysis_
 
 - **Intelligent Conversations**: Chat naturally with your PDFs using advanced language models
 - **Context-Aware Responses**: Get accurate answers based on document content
-- **Multi-Language Support**: Works with documents in various languages
+
 - **Real-Time Processing**: Instant responses with streaming AI technology
 
 ### 📄 **Advanced PDF Management**
@@ -687,6 +687,7 @@ Special thanks to:
 [🌐 Website](https://www.lexinote.tech/) • [📧 Contact](mailto:support@lexinote.tech) •
 
 </div>
+
 
 
 
