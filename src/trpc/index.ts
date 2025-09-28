@@ -367,7 +367,7 @@ export const appRouter = router({
       }
     }),
 
-  // Create message
+  // Create message (deprecated - use sendMessage instead)
   createMessage: privateProcedure
     .input(z.object({
       fileId: z.string(),
@@ -388,6 +388,13 @@ export const appRouter = router({
         throw new TRPCError({ code: 'NOT_FOUND', message: 'File not found' })
       }
 
+      if (file.uploadStatus !== 'SUCCESS') {
+        throw new TRPCError({ 
+          code: 'PRECONDITION_FAILED', 
+          message: 'File is still processing. Please wait for upload to complete.' 
+        })
+      }
+
       // Create user message
       const userMessage = await db.message.create({
         data: {
@@ -398,18 +405,41 @@ export const appRouter = router({
         },
       })
 
-      
-      // For now, create a simple AI response
-      const aiResponse = await db.message.create({
-        data: {
-          text: `This is an AI response to: "${input.message}"`,
-          isUserMessage: false,
+      return { userMessage }
+    }),
+
+  // Send message with AI processing (new endpoint)
+  sendMessage: privateProcedure
+    .input(z.object({
+      fileId: z.string(),
+      message: z.string().min(1).max(2000),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      // This will redirect to the API route for proper streaming/AI processing
+      // The actual AI processing happens in /api/message route
+      const { userId } = ctx
+
+      // Verify file ownership and status
+      const file = await db.file.findFirst({
+        where: {
+          id: input.fileId,
           userId,
-          fileId: input.fileId,
         },
       })
 
-      return { userMessage, aiResponse }
+      if (!file) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'File not found' })
+      }
+
+      if (file.uploadStatus !== 'SUCCESS') {
+        throw new TRPCError({ 
+          code: 'PRECONDITION_FAILED', 
+          message: 'File is still processing. Please wait for upload to complete.' 
+        })
+      }
+
+      // Return success - actual message processing happens in API route
+      return { success: true, fileId: input.fileId, message: input.message }
     }),
 
   // Stripe session creation

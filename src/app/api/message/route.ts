@@ -7,47 +7,73 @@ import { PineconeStore } from "@langchain/pinecone";
 import { gemini } from "@/lib/geminiai";
 
 export const POST = async (req: NextRequest) => {
-  const body = await req.json();
+  try {
+    const body = await req.json();
 
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-  console.log("Message route user:", user);
+    const { getUser } = getKindeServerSession();
+    const user = await getUser();
+    console.log("🔐 Message route user:", user?.id);
 
-  const userId = user?.id;
+    const userId = user?.id;
 
-  if (!userId) {
-    return new Response("Unauthorized", { status: 401 })
-  }
-
-  const { fileId, message } = SendMessageValidator.parse(body);
-
-  const file = await prisma.file.findFirst({
-    where: {
-      id: fileId,
-      userId
+    if (!userId) {
+      console.error("❌ Unauthorized access attempt");
+      return new Response("Unauthorized", { status: 401 })
     }
-  })
 
-  if (!file) return new Response("Not found", { status: 404 });
+    const { fileId, message } = SendMessageValidator.parse(body);
+    console.log(`💬 Processing message for file: ${fileId}`);
 
-  await prisma.message.create({
-    data: {
-      text: message,
-      isUserMessage: true,
-      userId,
-      fileId
+    const file = await prisma.file.findFirst({
+      where: {
+        id: fileId,
+        userId
+      }
+    })
+
+    if (!file) {
+      console.error(`❌ File not found: ${fileId} for user: ${userId}`);
+      return new Response("File not found", { status: 404 });
     }
-  })
 
-  // vectorise message using Gemini embeddings
-  const embeddings = gemini;
+    if (file.uploadStatus !== 'SUCCESS') {
+      console.error(`❌ File not ready for chat: ${fileId}, status: ${file.uploadStatus}`);
+      return new Response("File is still processing. Please wait for upload to complete.", { status: 400 });
+    }
 
-  const pineconeIndex = pinecone.Index("lexinote");
+    // Create user message
+    await prisma.message.create({
+      data: {
+        text: message,
+        isUserMessage: true,
+        userId,
+        fileId
+      }
+    })
 
-  const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
-    namespace: file.id,
-    pineconeIndex
-  })
+    console.log("💾 User message saved to database");
+
+    // Validate environment variables
+    if (!process.env.GOOGLE_API_KEY) {
+      console.error("❌ GOOGLE_API_KEY not found in environment variables");
+      return new Response("AI service not configured", { status: 500 });
+    }
+
+    if (!process.env.PINECONE_API_KEY) {
+      console.error("❌ PINECONE_API_KEY not found in environment variables");
+      return new Response("Vector database not configured", { status: 500 });
+    }
+
+    // vectorise message using Gemini embeddings
+    const embeddings = gemini;
+    const pineconeIndex = pinecone.Index("lexinote");
+
+    console.log(`🔍 Searching vectors in namespace: ${file.id}`);
+    
+    const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+      namespace: file.id,
+      pineconeIndex
+    })
 
   const results = await vectorStore.similaritySearch(message, 4)
 
@@ -151,4 +177,14 @@ USER INPUT: ${message}
   });
 
   return new Response(completion, { status: 200 });
+  } catch (error) {
+    console.error("❌ Error in message processing:", error);
+    
+    // Return a helpful error message
+    const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+    return new Response(`Error processing message: ${errorMessage}`, { 
+      status: 500,
+      headers: { 'Content-Type': 'text/plain' }
+    });
+  }
 }
